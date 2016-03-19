@@ -1,0 +1,150 @@
+<p>Let us get started by drawing some simple shapes.</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Color</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Graphics.Collage</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="n">main</span> <span class="o">:</span> <span class="kt">Element</span>
+<span class="n">main</span> <span class="o">=</span>
+  <span class="n">collage</span> <span class="mi">300</span> <span class="mi">300</span>
+    <span class="p">[</span><span class="n">makeSquare</span> <span class="n">blue</span> <span class="mi">50</span><span class="p">]</span>
+
+<span class="c1">--Simple Shapes</span>
+<span class="n">makeSquare</span> <span class="n">color</span> <span class="n">size</span> <span class="o">=</span>
+  <span class="n">filled</span> <span class="n">color</span> <span class="p">(</span><span class="n">square</span> <span class="n">size</span><span class="p">)</span></code></pre></figure>
+
+<p>You can just enter this code in the <a href="http://elm-lang.org/try">online editor/runner.</a></p>
+
+<p>Now let us see if we can understand how this code works.
+At the top of the code you are seeing a set of import statements, that allows the elm compiler to include all the packages containing the functions we want to use. In this case the packages are Color, Graphics.Element  and Graphics.Collage.</p>
+
+<p>Now let us look at the function <code class="highlighter-rouge">main</code> what it does is to construct a graphics Element which then gets displayed. The graphics Element is constructed by calling the function <code class="highlighter-rouge">collage</code> which takes as input two integers (which define the dimensions of the collage) and a list of Form objects that it then converts to graphics Elements. The signature of the collage function which makes all this explicit is as follows:</p>
+
+<p><code class="highlighter-rouge">collage : Int -&gt; Int -&gt; List Form -&gt; Element</code></p>
+
+<p>We need to understand two more functions to get the full picture:</p>
+
+<ul>
+  <li>
+    <p>First we create a Shape using the function <code class="highlighter-rouge">square</code> which creates a square with the given edge length (side).
+<code class="highlighter-rouge">square : Float -&gt; Shape</code></p>
+  </li>
+  <li>
+    <p>Then we pass this Shape to the function <code class="highlighter-rouge">filled</code> which takes the Shape and a color and returns a Form which can be passed to collage.
+<code class="highlighter-rouge">filled : Color -&gt; Shape -&gt; Form</code></p>
+  </li>
+</ul>
+
+<p>That is all there is to it!</p>
+
+<h3 id="exercises">Exercises</h3>
+
+<ol>
+  <li>
+    <p>Try changing colors and sizes on the square to see how this all works.</p>
+  </li>
+  <li>
+    <p>Using the documentation see if you can create a red circle. (Hint: Create a new function makeCircle similar to makeSquare.)</p>
+  </li>
+  <li>
+    <p>Try and make a blue square of side 40 and a circle of radius 60. (Hint: collage will accept a list of Shape Forms.)</p>
+  </li>
+</ol>
+
+<p>You will find the complete documentation for the Graphics.Collage package at this <a href="http://package.elm-lang.org/packages/elm-lang/core/2.0.1/Graphics-Collage">link</a></p>
+
+<h3 id="more-shapes">More Shapes</h3>
+
+<p>Let us create a few more shapes using functions that are defined in Graphics-Collage. The shapes we will consider are:</p>
+
+<ul>
+  <li>Triangle</li>
+  <li>Rectangle</li>
+  <li>NGon with n sides</li>
+  <li>NGon with n vertices</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="c1">--Simple Shapes</span>
+<span class="n">makeSquare</span> <span class="n">color</span> <span class="n">size</span> <span class="o">=</span>
+  <span class="n">filled</span> <span class="n">color</span> <span class="p">(</span><span class="n">square</span> <span class="n">size</span><span class="p">)</span>
+
+<span class="n">makeTriangle</span> <span class="n">color</span> <span class="n">size</span> <span class="o">=</span>
+  <span class="n">filled</span> <span class="n">color</span> <span class="p">(</span><span class="n">ngon</span> <span class="mi">3</span> <span class="n">size</span><span class="p">)</span>
+
+<span class="n">makeRectangle</span> <span class="n">color</span> <span class="n">length</span> <span class="n">width</span> <span class="o">=</span>
+  <span class="n">filled</span> <span class="n">color</span> <span class="p">(</span><span class="n">rect</span> <span class="n">length</span> <span class="n">width</span><span class="p">)</span>
+
+<span class="n">makeCircle</span> <span class="n">color</span> <span class="n">size</span> <span class="o">=</span>
+  <span class="n">filled</span> <span class="n">color</span> <span class="p">(</span><span class="n">circle</span> <span class="n">size</span><span class="p">)</span>
+
+<span class="n">makeNgon</span> <span class="n">n</span> <span class="n">color</span> <span class="n">size</span> <span class="o">=</span>
+  <span class="n">filled</span> <span class="n">color</span> <span class="p">(</span><span class="n">ngon</span> <span class="n">n</span> <span class="n">size</span><span class="p">)</span>
+
+<span class="n">makePolygon</span> <span class="n">color</span> <span class="n">vertices</span>  <span class="o">=</span>
+  <span class="n">filled</span> <span class="n">color</span> <span class="p">(</span><span class="n">polygon</span> <span class="n">vertices</span><span class="p">)</span>
+
+<span class="n">vertices</span> <span class="o">=</span> <span class="p">[</span>  <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+            <span class="p">,</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+            <span class="p">,</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">50</span><span class="p">)</span>
+            <span class="p">,</span> <span class="p">(</span><span class="mi">80</span><span class="p">,</span><span class="mi">50</span><span class="p">)</span>
+            <span class="p">]</span></code></pre></figure>
+
+<h3 id="exercises-1">Exercises</h3>
+
+<ol>
+  <li>
+    <p>Write code that makes a blue pentagon.</p>
+  </li>
+  <li>
+    <p>Write code to make a red hexagon.</p>
+  </li>
+</ol>
+
+<h3 id="shapes-with-fills-and-outlines">Shapes with Fills and Outlines</h3>
+
+<p>So far we looked at shapes which were filled with a chosen color. But we can also make figure with outlines as shown below:</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Color</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Graphics.Collage</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="n">makeSquareOutlined</span> <span class="o">:</span> <span class="kt">Color</span><span class="o">.</span><span class="kt">Color</span> <span class="o">-&gt;</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">Graphics</span><span class="o">.</span><span class="kt">Collage</span><span class="o">.</span><span class="kt">Form</span>
+<span class="n">makeSquareOutlined</span> <span class="n">color</span> <span class="n">size</span> <span class="o">=</span>
+ <span class="n">square</span> <span class="n">size</span>
+ <span class="o">|&gt;</span><span class="n">outlined</span> <span class="p">(</span><span class="n">solid</span> <span class="n">color</span><span class="p">)</span>
+
+<span class="n">main</span> <span class="o">=</span>
+  <span class="n">collage</span> <span class="mi">300</span> <span class="mi">300</span>
+    <span class="p">[</span><span class="n">makeSquareOutlined</span> <span class="n">blue</span> <span class="mi">50</span><span class="p">]</span></code></pre></figure>
+
+<h3 id="exercises-2">Exercises</h3>
+
+<ol>
+  <li>Write code the makes a square with a <code class="highlighter-rouge">dashed</code> outline.
+(Hint you can use the function <code class="highlighter-rouge">dashed</code> instead of )</li>
+</ol>
+
+<h3 id="transforming-shapes">Transforming Shapes</h3>
+
+<p>Now that we have a set of shapes to work with we can look at functions that transform them.</p>
+
+<h3 id="making-a-star---using-triangles-and-transformations">Making a Star - using triangles and transformations</h3>
+
+<p>Once we understand transformations we can use them to create more complex shapes and figures.</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Color</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Graphics.Collage</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">List</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="n">main</span> <span class="o">:</span> <span class="kt">Element</span>
+<span class="n">main</span> <span class="o">=</span>
+  <span class="n">collage</span> <span class="mi">300</span> <span class="mi">300</span> <span class="p">(</span><span class="n">star</span> <span class="n">blue</span><span class="p">)</span>
+
+<span class="n">triangle</span> <span class="n">color</span> <span class="n">size</span> <span class="n">angle</span> <span class="o">=</span>
+  <span class="n">ngon</span> <span class="mi">3</span> <span class="n">size</span>
+  <span class="o">|&gt;</span><span class="n">filled</span> <span class="n">color</span>
+  <span class="o">|&gt;</span> <span class="n">rotate</span> <span class="p">(</span><span class="n">degrees</span> <span class="n">angle</span><span class="p">)</span>
+
+<span class="n">star</span> <span class="n">color</span> <span class="o">=</span> <span class="n">map2</span> <span class="p">(</span><span class="n">triangle</span> <span class="n">color</span><span class="p">)</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">]</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span></code></pre></figure>
+

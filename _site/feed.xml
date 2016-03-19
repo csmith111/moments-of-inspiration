@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Moments of Insight</title>
+    <description>
+We have all experienced moments in our life when we feel inspired. These are moments when we feel inspired and feel that life is worth living. Moments, triggered by a piece of music, writing, poetry or a picture, we have an so many sources of inspiration. In this blog I will capture some of my moments of inspiration. In this blog you will find some of my moments of insight; I would love to discover yours.
+</description>
+    <link>http://csmith111.github.io//</link>
+    <atom:link href="http://csmith111.github.io//feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 19 Mar 2016 11:40:00 -0400</pubDate>
+    <lastBuildDate>Sat, 19 Mar 2016 11:40:00 -0400</lastBuildDate>
+    <generator>Jekyll v3.0.2</generator>
+    
+      <item>
+        <title>Moments of Inspiration</title>
+        <description>&lt;p&gt;We have all experienced moments in our life when we feel inspired. These are moments when we feel that life is worth living and we have found another reason to do so, These &lt;strong&gt;moments&lt;/strong&gt;, triggered by a piece of music, writing, poetry or a picture, we have an so many sources of inspiration.
+In this blog I will capture some of my moments of inspiration.
+I would love to discover some of your &lt;strong&gt;moments&lt;/strong&gt; of inspiration.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 18 Mar 2016 14:00:28 -0400</pubDate>
+        <link>http://csmith111.github.io//jekyll/update/2016/03/18/FirstPost.html</link>
+        <guid isPermaLink="true">http://csmith111.github.io//jekyll/update/2016/03/18/FirstPost.html</guid>
+        
+        
+        <category>jekyll</category>
+        
+        <category>update</category>
+        
+      </item>
+    
+      <item>
+        <title>WHEN</title>
+        <description>&lt;h2 id=&quot;when&quot;&gt;WHEN&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;WHEN&lt;/strong&gt; I have emptied my soul, I am full of life &lt;br /&gt;
+&lt;strong&gt;WHEN&lt;/strong&gt; I am most alone, I am connected to all &lt;br /&gt;
+&lt;strong&gt;WHEN&lt;/strong&gt; I have faced my biggest fears, I am most calm &lt;br /&gt;
+&lt;strong&gt;WHEN&lt;/strong&gt; I recognize my ignorance, I discover deeper knowledge &lt;br /&gt;
+&lt;strong&gt;WHEN&lt;/strong&gt; I have no identity, I finally discover who I am &lt;br /&gt;
+&lt;strong&gt;WHEN&lt;/strong&gt; I weather the storms of grief, I discover an oasis of tranquility &lt;br /&gt;
+&lt;strong&gt;WHEN&lt;/strong&gt; I experience the burning ache of sorrow, I have known the bliss of love &lt;br /&gt;
+&lt;strong&gt;WHEN&lt;/strong&gt; I am shrouded by silence, I hear the music I could never hear before &lt;br /&gt;
+&lt;strong&gt;WHEN&lt;/strong&gt; I am most wretched, I am touched by grace &lt;br /&gt;
+&lt;strong&gt;WHEN&lt;/strong&gt; I have finished my struggles, I will know peace \&lt;/p&gt;
+</description>
+        <pubDate>Sat, 06 Feb 2016 13:00:28 -0500</pubDate>
+        <link>http://csmith111.github.io//jekyll/update/2016/02/06/SecondPost.html</link>
+        <guid isPermaLink="true">http://csmith111.github.io//jekyll/update/2016/02/06/SecondPost.html</guid>
+        
+        
+        <category>jekyll</category>
+        
+        <category>update</category>
+        
+      </item>
+    
+  </channel>
+</rss>

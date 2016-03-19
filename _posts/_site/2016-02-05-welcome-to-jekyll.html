@@ -1,0 +1,255 @@
+<p>After a long time I finally decided to create a blog. One of my friends suggested that I should use GitHub Pages to create the site. Apart from regular HTML, GitHub Pages supports <a href="http://jekyllrb.com/">Jekyll</a> (a static site generator). Amazing how we have come back full circle to realizing that static sites are great and you don’t need to have a database running or other complex infrastructure. For many simple situations like a blog site or a project documentation site a “static HTML site” is a simpler, more secure and performant option.
+Leveraging Markdown for templates to simplify content editing; and using a site generator to generate the HTML from the markdown template and control the over all layout and look and feel of the site (of course we use css as well) seems to be a reasonable option. That in a nutshell is what a static site generator (in this case Jekyll) will do for you.</p>
+
+<p>Currently along with Jekyll, Github uses <code class="highlighter-rouge">kramdown</code> for processing markdown templates and<code class="highlighter-rouge">rouge</code> for syntax highlighting. And I ended up using <code class="highlighter-rouge">MathJax</code> for displaying equations.</p>
+
+<p>Here are the steps that I took based on information that I found on <a href="https://pages.github.com/">git pages documentation</a>, <a href="https://help.github.com/articles/using-jekyll-with-pages/">using Jekyll with pages</a>, <a href="http://jekyll.tips/guide/github/">Jekyll tips</a> and <a href="https://help.github.com/categories/github-pages-basics/">pages help</a>. As I am writing this it is interesting to see how many different things you need to understand, version control (git), static site generation (Jekyll), HTML CSS, markdown and perhaps some Ruby as well. You may not need to use all this if you get lucky, but I find luck is overrated when it comes to computers and code.</p>
+
+<ul>
+  <li>First create a github account with a</li>
+  <li>Create a repository on github</li>
+  <li>Install Ruby, Jekyll and Bundler on your computer</li>
+  <li>Create a local folder to store the repo and preview content locally with Jekyll and link it to the git repository</li>
+  <li>Create the site and content  locally.</li>
+  <li>Push your content.</li>
+</ul>
+
+<h3 id="create-a-github-account">Create a github account</h3>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">username: <span class="s2">"username"</span></code></pre></figure>
+
+<p>For a quick introduction to GitHub using GitHub for version control you can use <a href="https://try.github.io/levels/1/challenges/1">this great introduction</a>.</p>
+
+<h3 id="create-a-repository">Create a repository</h3>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="n">repository</span><span class="o">:</span> <span class="s">"username"</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">io</span></code></pre></figure>
+
+<p>The content from the master branch will be use to build and publish the site.</p>
+
+<p><em>Note: that github blogs come in two flavors: User pages and Project pages.
+So I decided to try User Pages initially.</em></p>
+
+<p>I plan to use Project pages as well and will update this documentation once I implement it using the <a href="https://help.github.com/articles/creating-project-pages-manually/">instructions for setting up project pages</a>.</p>
+
+<p>Once the repo is set up you can generate pages with the automatic generator. I did not see this option initially or I would have tried it, perhaps I will do this anyway soon and report on the experience.</p>
+
+<p>The other option is to use Jekyll to generate your blog.
+Here it probably does make sense to set up Jekyll locally and then push your content to github when you are ready to publish.</p>
+
+<p>Finally you need to make sure that you activate the website generation. On GitHub go to the username.github.io repository, choose Settings, then the GitHub Pages section in order to activate the website generation.</p>
+
+<h3 id="install-ruby-jekyll-and-bundler-on-your-computer">Install Ruby, Jekyll and Bundler on your computer</h3>
+<p>I found the instructions on <a href="https://help.github.com/articles/using-jekyll-with-pages/">using Jekyll with pages</a> pretty much worked as is.</p>
+
+<h3 id="create-a-local-folder-to-store-the-repo-and-preview-content-locally-with-jekyll">Create a local folder to store the repo and preview content locally with Jekyll.</h3>
+
+<p>Create a local folder with and git clone your blog repository.
+<code class="highlighter-rouge">git clone "https://github.com/username/username.github.io"</code></p>
+
+<p>To check that you are in sync with the repo and GitHub pages are working you just push a simple index.html page and preview it online as follows:</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nb">cd </span>username.github.io
+<span class="nb">echo</span> <span class="s2">"Hello Blog"</span> &gt;index.html
+git add --all
+git commit - m <span class="s2">"Initial commit"</span>
+git push -u origin master</code></pre></figure>
+
+<p>If all these steps worked you should be able to navigate to
+<code class="highlighter-rouge">https://github.com/username.github.io</code> and see your blog is live!</p>
+
+<p>Essentially create a Gemfile with</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nb">source</span> <span class="s1">'https://rubygems.org'</span>
+gem <span class="s1">'github-pages'</span></code></pre></figure>
+
+<p>This will install the <a href="https://github.com/github/pages-gem">GitHub Pages Ruby Gem</a>
+and this should ensure that you have the same version of Jekyll as github. And you can run <code class="highlighter-rouge">bundle update</code> periodically to keep in sync.</p>
+
+<h3 id="set-up-jekyll-and-create-the-site">Set up Jekyll and create the site.</h3>
+
+<p>Now open up a terminal change into your site directory and run:</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$jekyll</span> new .</code></pre></figure>
+
+<p>You can preview your site using <code class="highlighter-rouge">jekyll serve</code>.
+Now navigate to <code class="highlighter-rouge">http://localhost:4000</code> to see the default local site you have just created.</p>
+
+<h3 id="create-content">Create content</h3>
+<p>Now that your site is up and running you can start modifying it and creating content.</p>
+
+<ul>
+  <li>Folder structure
+Jekyll creates a default folder structure which currently
+looks like this for me.</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">├── Gemfile
+├── README.md
+├── config.yml
+├── includes
+├── layouts
+│   ├── default.html
+│   ├── page.html
+│   └── post.html
+├── posts
+│   ├── 2016-02-06-FirstBlogPost.markdown
+│   └── 2016-02-06-welcome-to-jekyll.markdown
+├── sass
+├── site
+├── about.md
+├── css
+├── feed.xml
+└── index.html</code></pre></figure>
+
+<p>(I have removed the underscore from the names of all the folders for this blog.)</p>
+
+<ul>
+  <li>
+    <p>Files to modify: Now you can start modifying the files as required. Start with about.md and config.yml.</p>
+  </li>
+  <li>
+    <p>Creating Posts: Now you can create your first post. Posts
+are markdown files that are stored in the posts directory.
+The file names have to look like <code class="highlighter-rouge">yyyy-mm-dd-postname.md</code> so for
+example you could create a file with the name
+<code class="highlighter-rouge">2016-01-12-firstBlogPost.md</code>.</p>
+  </li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown"><span class="nn">---</span>
+<span class="s">layout</span><span class="pi">:</span> <span class="s">post</span>
+<span class="s">title</span><span class="pi">:</span>  <span class="s2">"</span><span class="s">A</span><span class="nv"> </span><span class="s">New</span><span class="nv"> </span><span class="s">Blog!"</span>
+<span class="s">date</span><span class="pi">:</span>   <span class="s">2016-02-06 13:00:28 -0500</span>
+<span class="s">categories</span><span class="pi">:</span> <span class="s">jekyll update</span>
+<span class="nn">---</span>
+Your markdown content goes here...</code></pre></figure>
+
+<ul>
+  <li>Creating an index.html
+Finally you need to create an index.html file that will be the file that github directs you to when you go to
+<code class="highlighter-rouge">https://github.com/username.github.io</code>. We had already done this earlier but now we need to update this file so it provides the links to all the static files you have generate.</li>
+</ul>
+
+<p>I completely missed this step and spent a lot of time hacking but failed to succeed in seeming the generated pages. I sent a note to GitHub and was pleasantly surprised by a response the next day from John Greet (GitHub staff) helping me resolve the issue. (It is amazing how little we appreciate the value of good support, so thank you John!)
+The two points he made was that the generated site pages go to standard locations like:
+<code class="highlighter-rouge">https://username.github.io/jekyll/update/2016/02/06/FirstBlogPost.html</code> which mirror the structure of the sites directory or the output of the Jekyll build.
+So you can always access the pages from there. However a cleaner solution is to create an index.html file that points to the correct locations. You place the index.html at the root of the directory and now you access this index.html from: <code class="highlighter-rouge">https://username.github.io/</code>.
+John directed me to a fairly simple example:<a href="[https://github.com/kneath/kneath.github.com/blob/master/index.html">index.html</a>
+and I was good to go.</p>
+
+<h3 id="push-your-content-to-github">Push your content to GitHub</h3>
+<p>Create a .gitignore file which contains a list of files/folder you
+do not wish to check in. This is what my .gitignore currently
+contains.</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">site/
+.sass-cache/
+.jekyll-metadata
+Gemfile.lock
+.DS_Store</code></pre></figure>
+
+<p>Please note that the entry above should be “underscore”site
+but my editor (atom) messes up the syntax highlighting if I do
+that!!</p>
+
+<p>Also note that I am not pushing the site that is generated locally,
+GitHub will do this automagically for you when you push your changes to the site.</p>
+
+<p>This is a standard sequence to push you content once you are satisfied with it.</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">git add --all
+git commit - m <span class="s2">"Initial commit"</span>
+git push -u origin master</code></pre></figure>
+
+<p>If you are seeing this page, then all of the above described magic worked! I would love it if you could try this out and let me know if there are any inaccuracies in my description.</p>
+
+<h3 id="customizing-your-site">Customizing your site</h3>
+
+<p>I have not spent much time customizing the site yet. But we can start by modifying the files in the layout folder and updating the config.yml file.</p>
+
+<h3 id="getting-math-equations-to-display">Getting Math equations to display</h3>
+
+<p>This was another adventure for me, that worked out fine in the end.</p>
+
+<p>I used the config recommended by cwoebker<a href="http://cwoebker.com/posts/latex-math-magic">cwoebker</a>:
+Although he uses rdisount instead of kramdown.</p>
+
+<p>The is a <a href="http://jekyllrb.com/docs/extras/#math-support">link on the Jekyll site that refers to mathJax</a>essentially points to:
+<a href="http://gastonsanchez.com/opinion/2014/02/16/Mathjax-with-jekyll/">a page by Gaston Sanchez</a>
+ which currently seems to be broken in terms of the equations not working correctly?</p>
+
+<p>Anyway all I did was include the following in my post.html file in the <code class="highlighter-rouge">_layouts</code> folder.</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://cdn.mathjax.org/mathjax/latest/MathJax.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/x-mathjax-config"</span><span class="nt">&gt;</span>
+    <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
+        <span class="na">jax</span><span class="p">:</span> <span class="p">[</span><span class="s2">"input/TeX"</span><span class="p">,</span><span class="s2">"output/HTML-CSS"</span><span class="p">],</span>
+        <span class="na">extensions</span><span class="p">:</span> <span class="p">[</span><span class="s2">"tex2jax.js"</span><span class="p">],</span>
+        <span class="na">tex2jax</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">inlineMath</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span><span class="s1">'$'</span><span class="p">,</span><span class="s1">'$'</span><span class="p">],</span> <span class="p">[</span><span class="s2">"\\("</span><span class="p">,</span><span class="s2">"\\)"</span><span class="p">]</span> <span class="p">],</span>
+        <span class="na">displayMath</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span><span class="s1">'$$'</span><span class="p">,</span><span class="s1">'$$'</span><span class="p">],</span> <span class="p">[</span><span class="s2">"\\["</span><span class="p">,</span><span class="s2">"\\]"</span><span class="p">]</span> <span class="p">],</span>
+        <span class="na">processEscapes</span><span class="p">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+    <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/x-mathjax-config"</span><span class="nt">&gt;</span>
+    <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
+        <span class="na">tex2jax</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">skipTags</span><span class="p">:</span> <span class="p">[</span><span class="s1">'script'</span><span class="p">,</span> <span class="s1">'noscript'</span><span class="p">,</span> <span class="s1">'style'</span><span class="p">,</span> <span class="s1">'textarea'</span><span class="p">,</span> <span class="s1">'pre'</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+
+    <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Queue</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">all</span> <span class="o">=</span> <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">getAllJax</span><span class="p">(),</span> <span class="nx">i</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">all</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">all</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">SourceElement</span><span class="p">().</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">className</span> <span class="o">+=</span> <span class="s1">' has-jax'</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://cdn.mathjax.org/mathjax/latest/MathJax.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/x-mathjax-config"</span><span class="nt">&gt;</span>
+        <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
+            <span class="na">jax</span><span class="p">:</span> <span class="p">[</span><span class="s2">"input/TeX"</span><span class="p">,</span><span class="s2">"output/HTML-CSS"</span><span class="p">],</span>
+            <span class="na">extensions</span><span class="p">:</span> <span class="p">[</span><span class="s2">"tex2jax.js"</span><span class="p">],</span>
+            <span class="na">tex2jax</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">inlineMath</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span><span class="s1">'$'</span><span class="p">,</span><span class="s1">'$'</span><span class="p">],</span> <span class="p">[</span><span class="s2">"\\("</span><span class="p">,</span><span class="s2">"\\)"</span><span class="p">]</span> <span class="p">],</span>
+            <span class="na">displayMath</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span><span class="s1">'$$'</span><span class="p">,</span><span class="s1">'$$'</span><span class="p">],</span> <span class="p">[</span><span class="s2">"\\["</span><span class="p">,</span><span class="s2">"\\]"</span><span class="p">]</span> <span class="p">],</span>
+            <span class="na">processEscapes</span><span class="p">:</span> <span class="kc">true</span>
+            <span class="p">},</span>
+        <span class="p">});</span>
+        <span class="nt">&lt;/script&gt;</span>
+
+        <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/x-mathjax-config"</span><span class="nt">&gt;</span>
+        <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
+            <span class="na">tex2jax</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">skipTags</span><span class="p">:</span> <span class="p">[</span><span class="s1">'script'</span><span class="p">,</span> <span class="s1">'noscript'</span><span class="p">,</span> <span class="s1">'style'</span><span class="p">,</span> <span class="s1">'textarea'</span><span class="p">,</span> <span class="s1">'pre'</span><span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+
+        <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Queue</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">all</span> <span class="o">=</span> <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">getAllJax</span><span class="p">(),</span> <span class="nx">i</span><span class="p">;</span>
+            <span class="k">for</span><span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">all</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">all</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">SourceElement</span><span class="p">().</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">className</span> <span class="o">+=</span> <span class="s1">' has-jax'</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+        <span class="nt">&lt;/script&gt;</span></code></pre></figure>
+
+<p>Now you can do something like:</p>
+
+<p><strong>And God said:</strong></p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}
+\begin{aligned}
+\frac{\partial\mathcal{D}}{\partial t} \quad & = \quad \nabla\times\mathcal{H},   & \quad \text{(Faraday's Law)} \\[5pt]
+\frac{\partial\mathcal{B}}{\partial t} \quad & = \quad -\nabla\times\mathcal{E},  & \quad \text{(Ampère's Law)}   \\[5pt]
+\nabla\cdot\mathcal{B}                 \quad & = \quad 0,                         & \quad \text{(Gauss Law)}   \\[5pt]
+\nabla\cdot\mathcal{D}                 \quad & = \quad 0.                         & \quad \text{(Colomb Law)}
+\end{aligned}
+\end{equation} %]]></script>
+
+<p><strong>and there was light!</strong></p>
+
+<h3 id="syntax-highlighters">Syntax highlighters</h3>
+<p>Github uses kramdown as its markdown template processing and rouge for syntax highlighting. You can see that rouge supports a long <a href="http://rouge.jayferd.us/demo">list of languages</a>. You can also find some documnetation in <a href="https://github.com/jneen/rouge/wiki">the rouge wiki</a>.</p>
+

@@ -1,0 +1,290 @@
+<p>Now that we have understood Signals and Graphics in Elm, it is rather easy to create Animations.</p>
+
+<h3 id="animation-using-mouse-signals">Animation using Mouse Signals</h3>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Html</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Html.Attributes</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Mouse</span>
+
+
+<span class="n">animatedImage</span> <span class="n">w</span> <span class="n">h</span> <span class="o">=</span>
+  <span class="n">img</span>
+    <span class="p">[</span><span class="n">src</span> <span class="s">"http://elm-lang.org/imgs/yogi.jpg"</span>
+    <span class="p">,</span><span class="n">style</span>
+       <span class="p">[(</span><span class="s">"width"</span><span class="p">,</span> <span class="n">toString</span> <span class="n">w</span> <span class="o">++</span> <span class="s">"px"</span><span class="p">)</span>
+        <span class="p">,(</span><span class="s">"height"</span><span class="p">,</span> <span class="n">toString</span> <span class="n">h</span> <span class="o">++</span> <span class="s">"px"</span><span class="p">)</span>
+       <span class="p">]</span>
+    <span class="p">]</span><span class="kt">[]</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="kt">Signal</span><span class="o">.</span><span class="n">map2</span> <span class="n">animatedImage</span> <span class="kt">Mouse</span><span class="o">.</span><span class="n">x</span> <span class="kt">Mouse</span><span class="o">.</span><span class="n">y</span></code></pre></figure>
+
+<p>Try this out by pasting this code in the <a href="http://elm-lang.org/try">online editor/runner.</a> You should see that the image size is animated based on the x coordinate of the Mouse withing the window.</p>
+
+<p>Let us see if we can understand this code. The first thing is to create a function that displays an image (Feel free to replace this image with any image you like to animate and continue the exercises). This function <code class="highlighter-rouge">animatedImage</code> takes two parameters set the width and height of the the image.</p>
+
+<p>Now in order to animate it we need to map this function over a Signal that contains your mouse x and y coordinates. But we know how to do that from our examples using Signals; just use Signal.map.  And we are done!</p>
+
+<h3 id="exercise">Exercise</h3>
+<ul>
+  <li>Animate an image where width and the height of the image depend on the number of mouse clicks.</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Html</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Html.Attributes</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Mouse</span>
+
+<span class="n">animatedImage</span> <span class="n">w</span> <span class="n">h</span> <span class="o">=</span>
+  <span class="n">img</span>
+    <span class="p">[</span><span class="n">src</span> <span class="s">"http://elm-lang.org/imgs/yogi.jpg"</span>
+    <span class="p">,</span><span class="n">style</span>
+       <span class="p">[(</span><span class="s">"width"</span><span class="p">,</span> <span class="n">toString</span> <span class="n">w</span> <span class="o">++</span> <span class="s">"px"</span><span class="p">)</span>
+        <span class="p">,(</span><span class="s">"height"</span><span class="p">,</span> <span class="n">toString</span> <span class="n">h</span> <span class="o">++</span> <span class="s">"px"</span><span class="p">)</span>
+       <span class="p">]</span>
+    <span class="p">]</span><span class="kt">[]</span>
+
+<span class="n">mouseClickCount</span> <span class="o">=</span> <span class="kt">Signal</span><span class="o">.</span><span class="n">foldp</span> <span class="p">(</span><span class="nf">\</span><span class="n">click</span> <span class="n">count</span> <span class="o">-&gt;</span><span class="mi">2</span><span class="o">*</span><span class="n">count</span> <span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="mi">80</span> <span class="kt">Mouse</span><span class="o">.</span><span class="n">clicks</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="kt">Signal</span><span class="o">.</span><span class="n">map2</span> <span class="n">animatedImage</span> <span class="n">mouseClickCount</span> <span class="n">mouseClickCount</span></code></pre></figure>
+
+<p>Now we can look at a couple of more elaborate examples:</p>
+
+<ul>
+  <li>A Bouncing ball</li>
+  <li>A clock</li>
+</ul>
+
+<p>These examples are triggered by special events <code class="highlighter-rouge">fps : number -&gt; Signal Time</code> and <code class="highlighter-rouge">every : Time -&gt; Signal Time</code> that are defined in the <a href="http://package.elm-lang.org/packages/elm-lang/core/3.0.0/Time#fps">Time module</a>. We discussed them briefly in the exercises in the section on <a href="https://csmith111.github.io/jekyll/update/2016/02/10/Signals.html">Signals</a>.</p>
+
+<h3 id="a-bouncing-ball">A bouncing ball</h3>
+
+<p>This is a very cool animation that requires you to figure out how to simulate an object falling in a gravitational field.
+It is key to examine how the updates to position and velocity are done.</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Collage</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Signal</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Color</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Time</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="kr">import</span> <span class="nn">Debug</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">map</span> <span class="n">draw</span> <span class="n">ballSignal</span>
+
+
+
+<span class="n">draw</span> <span class="n">aball</span> <span class="o">=</span>
+  <span class="n">collage</span> <span class="mi">150</span> <span class="mi">400</span>
+   <span class="p">[</span> <span class="n">rect</span> <span class="mi">150</span> <span class="mi">400</span> <span class="o">|&gt;</span> <span class="n">filled</span> <span class="p">(</span><span class="n">rgb</span> <span class="mi">135</span> <span class="mi">206</span> <span class="mi">250</span><span class="p">)</span>
+   <span class="p">,</span> <span class="n">circle</span> <span class="mi">15</span>    <span class="o">|&gt;</span> <span class="n">filled</span> <span class="n">red</span>
+                  <span class="o">|&gt;</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">aball</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="mi">160</span><span class="p">)</span>
+   <span class="p">,</span> <span class="n">rect</span> <span class="mi">150</span> <span class="mi">50</span>  <span class="o">|&gt;</span> <span class="n">filled</span> <span class="n">green</span>
+                  <span class="o">|&gt;</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">200</span><span class="p">)</span>
+   <span class="p">]</span>
+
+<span class="c1">-- Physics</span>
+<span class="n">gravity</span> <span class="o">=</span> <span class="mi">640</span>
+<span class="n">bounceVelocity</span> <span class="o">=</span> <span class="mi">400</span>
+
+<span class="kr">type</span> <span class="n">alias</span> <span class="kt">Ball</span> <span class="o">=</span> <span class="p">{</span> <span class="n">height</span> <span class="o">:</span> <span class="kt">Float</span><span class="p">,</span> <span class="n">velocity</span> <span class="o">:</span> <span class="kt">Float</span><span class="p">}</span>
+
+<span class="n">stepUpdate</span> <span class="o">:</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">Ball</span> <span class="o">-&gt;</span> <span class="kt">Ball</span>
+<span class="n">stepUpdate</span> <span class="n">time</span> <span class="n">aball</span> <span class="o">=</span>
+ <span class="p">{</span> <span class="n">aball</span> <span class="o">|</span> <span class="n">height</span>   <span class="o">=</span> <span class="n">aball</span><span class="o">.</span><span class="n">height</span> <span class="o">+</span> <span class="n">aball</span><span class="o">.</span><span class="n">velocity</span> <span class="o">*</span> <span class="n">time</span><span class="p">,</span>
+          <span class="n">velocity</span> <span class="o">=</span> <span class="kr">if</span> <span class="p">(</span><span class="n">aball</span><span class="o">.</span><span class="n">height</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="kr">then</span> <span class="n">bounceVelocity</span> <span class="kr">else</span> <span class="n">aball</span><span class="o">.</span><span class="n">velocity</span> <span class="o">-</span> <span class="n">gravity</span> <span class="o">*</span> <span class="n">time</span> <span class="p">}</span>
+
+<span class="c1">--To explain the ordering of paramters in ballSignal</span>
+<span class="c1">--Note:foldp : (a -&gt; b -&gt; b) -&gt; b -&gt; Signal.Signal a -&gt; Signal.Signal b</span>
+
+<span class="n">ballSignal</span> <span class="o">:</span> <span class="kt">Signal</span> <span class="kt">Ball</span>
+<span class="n">ballSignal</span> <span class="o">=</span> <span class="n">foldp</span> <span class="n">stepUpdate</span> <span class="p">{</span><span class="n">height</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">bounceVelocity</span><span class="p">}</span>
+                  <span class="p">(</span><span class="n">map</span> <span class="n">inSeconds</span> <span class="p">(</span><span class="n">fps</span> <span class="mi">30</span><span class="p">))</span></code></pre></figure>
+
+<p>Try changing the <code class="highlighter-rouge">bounceVelocity</code> and the <code class="highlighter-rouge">gravity parameters</code>.</p>
+
+<h3 id="exercises">Exercises</h3>
+<ul>
+  <li>Add a factor called elasticity and the update rule that
+ <code class="highlighter-rouge">bounceVelocity = elasticity * bounceVelocity</code> and modify the <code class="highlighter-rouge">type alias Ball = { height : Float, velocity : Float, bounceVelocity}</code>. This will simulate the effect of elasticity. The ball bounces should progressively decrease in height and finally come to a stop.</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Collage</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Signal</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Color</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Time</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="kr">import</span> <span class="nn">Debug</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">map</span> <span class="n">draw</span> <span class="n">ballSignal</span>
+
+<span class="n">draw</span> <span class="n">aball</span> <span class="o">=</span>
+  <span class="n">collage</span> <span class="mi">150</span> <span class="mi">400</span>
+   <span class="p">[</span> <span class="n">rect</span> <span class="mi">150</span> <span class="mi">400</span> <span class="o">|&gt;</span> <span class="n">filled</span> <span class="p">(</span><span class="n">rgb</span> <span class="mi">135</span> <span class="mi">206</span> <span class="mi">250</span><span class="p">)</span>
+   <span class="p">,</span> <span class="n">circle</span> <span class="mi">15</span>    <span class="o">|&gt;</span> <span class="n">filled</span> <span class="n">red</span>
+                  <span class="o">|&gt;</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">aball</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="mi">160</span><span class="p">)</span>
+   <span class="p">,</span> <span class="n">rect</span> <span class="mi">150</span> <span class="mi">50</span>  <span class="o">|&gt;</span> <span class="n">filled</span> <span class="n">green</span>
+                  <span class="o">|&gt;</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">200</span><span class="p">)</span>
+   <span class="p">]</span>
+
+<span class="c1">-- Physics</span>
+<span class="n">gravity</span> <span class="o">=</span> <span class="mi">640</span>
+<span class="n">elasticity</span> <span class="o">=</span> <span class="mf">0.95</span>
+
+<span class="kr">type</span> <span class="n">alias</span> <span class="kt">Ball</span> <span class="o">=</span>
+  <span class="p">{</span> <span class="n">height</span> <span class="o">:</span> <span class="kt">Float</span><span class="p">,</span> <span class="n">velocity</span> <span class="o">:</span> <span class="kt">Float</span><span class="p">,</span> <span class="n">bounceVelocity</span> <span class="o">:</span> <span class="kt">Float</span><span class="p">}</span>
+
+<span class="n">stepUpdate</span> <span class="o">:</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">Ball</span> <span class="o">-&gt;</span> <span class="kt">Ball</span>
+<span class="n">stepUpdate</span> <span class="n">time</span> <span class="n">aball</span> <span class="o">=</span>
+ <span class="p">{</span> <span class="n">aball</span> <span class="o">|</span> <span class="n">height</span>   <span class="o">=</span> <span class="n">aball</span><span class="o">.</span><span class="n">height</span> <span class="o">+</span> <span class="n">aball</span><span class="o">.</span><span class="n">velocity</span> <span class="o">*</span> <span class="n">time</span>
+           <span class="p">,</span><span class="n">velocity</span> <span class="o">=</span> <span class="kr">if</span> <span class="p">(</span><span class="n">aball</span><span class="o">.</span><span class="n">height</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="kr">then</span> <span class="n">aball</span><span class="o">.</span><span class="n">bounceVelocity</span> <span class="kr">else</span> <span class="n">aball</span><span class="o">.</span><span class="n">velocity</span> <span class="o">-</span> <span class="n">gravity</span> <span class="o">*</span> <span class="n">time</span>
+           <span class="p">,</span><span class="n">bounceVelocity</span> <span class="o">=</span> <span class="kr">if</span> <span class="p">(</span><span class="n">aball</span><span class="o">.</span><span class="n">height</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="kr">then</span> <span class="n">elasticity</span> <span class="o">*</span> <span class="n">aball</span><span class="o">.</span><span class="n">bounceVelocity</span> <span class="kr">else</span> <span class="n">aball</span><span class="o">.</span><span class="n">bounceVelocity</span>
+          <span class="p">}</span>
+
+<span class="c1">--To explain the ordering of paramters in ballSignal</span>
+<span class="c1">--Note:foldp : (a -&gt; b -&gt; b) -&gt; b -&gt; Signal.Signal a -&gt; Signal.Signal b</span>
+
+<span class="n">ballSignal</span> <span class="o">:</span> <span class="kt">Signal</span> <span class="kt">Ball</span>
+<span class="n">ballSignal</span> <span class="o">=</span> <span class="n">foldp</span> <span class="n">stepUpdate</span> <span class="p">{</span><span class="n">height</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">bounceVelocity</span><span class="o">=</span><span class="mi">400</span><span class="p">}</span>
+   <span class="p">(</span><span class="n">map</span> <span class="n">inSeconds</span> <span class="p">(</span><span class="n">fps</span> <span class="mi">30</span><span class="p">))</span></code></pre></figure>
+
+<h3 id="many-bouncing-balls">Many Bouncing Balls</h3>
+
+<p>Can we extend the Bouncing ball example to many bouncing Balls?
+I ended up using the extremely useful library Signal.Extra.
+But this means that you will have to run this program locally since try-elm does not support Signal.extra currently.</p>
+
+<p>I have covered the Elm installation in the post Elm Setup.
+You can add <a href="https://github.com/Apanatshka/elm-signal-extra">Signal.Extra from Github</a></p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="o">$</span> <span class="n">elm</span> <span class="n">package</span> <span class="n">install</span> <span class="kt">Apanatshka</span><span class="o">/</span><span class="n">elm</span><span class="o">-</span><span class="n">signal</span><span class="o">-</span><span class="n">extra</span></code></pre></figure>
+
+<p>If you don’t what to get side tracked into installs at this time, you could just browse the code to understand the key ideas.</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Collage</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Signal</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Color</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Time</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Signal.Extra</span> <span class="n">exposing</span> <span class="p">(</span><span class="n">mapMany</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Debug</span>
+<span class="kr">import</span> <span class="nn">Array</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="kr">type</span> <span class="n">alias</span> <span class="kt">Ball</span> <span class="o">=</span> <span class="p">{</span> <span class="n">id</span><span class="o">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">x</span> <span class="o">:</span> <span class="kt">Float</span><span class="p">,</span> <span class="n">y</span> <span class="o">:</span> <span class="kt">Float</span><span class="p">,</span> <span class="n">vx</span> <span class="o">:</span> <span class="kt">Float</span><span class="p">,</span> <span class="n">vy</span> <span class="o">:</span> <span class="kt">Float</span><span class="p">,</span> <span class="n">initialVy</span> <span class="o">:</span> <span class="kt">Float</span><span class="p">}</span>
+
+<span class="n">drawMany</span> <span class="n">balls</span> <span class="o">=</span>
+   <span class="n">collage</span> <span class="mi">150</span> <span class="mi">400</span>
+   <span class="p">(</span>  <span class="p">(</span><span class="n">rect</span> <span class="mi">150</span> <span class="mi">400</span> <span class="o">|&gt;</span> <span class="n">filled</span> <span class="p">(</span><span class="n">rgb</span> <span class="mi">135</span> <span class="mi">206</span> <span class="mi">250</span><span class="p">))</span>
+   <span class="o">::</span> <span class="p">(</span><span class="n">rect</span> <span class="mi">150</span> <span class="mi">50</span>  <span class="o">|&gt;</span> <span class="n">filled</span> <span class="n">green</span> <span class="o">|&gt;</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">200</span><span class="p">))</span>
+   <span class="o">::</span> <span class="kt">List</span><span class="o">.</span><span class="n">map</span> <span class="n">drawBall</span> <span class="n">balls</span><span class="p">)</span>
+
+<span class="n">drawBall</span> <span class="o">:</span> <span class="kt">Ball</span> <span class="o">-&gt;</span> <span class="kt">Form</span>
+<span class="n">drawBall</span> <span class="n">aBall</span> <span class="o">=</span>
+    <span class="n">circle</span> <span class="mi">15</span> <span class="o">|&gt;</span> <span class="n">filled</span> <span class="n">red</span>
+              <span class="o">|&gt;</span> <span class="n">move</span> <span class="p">(</span><span class="n">aBall</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">aBall</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="mi">160</span><span class="p">)</span>
+
+<span class="c1">-- Physics</span>
+<span class="n">gravity</span> <span class="o">=</span> <span class="mi">640</span>
+
+<span class="c1">-- helper function to extract a value from an Array</span>
+<span class="n">mayBeToValue</span> <span class="o">:</span> <span class="kt">Maybe</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span>
+<span class="n">mayBeToValue</span> <span class="n">aJust</span> <span class="n">defaultV</span> <span class="o">=</span>  <span class="kr">case</span> <span class="n">aJust</span> <span class="kr">of</span>
+  <span class="kt">Just</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span>
+  <span class="kt">Nothing</span> <span class="o">-&gt;</span> <span class="n">defaultV</span>
+
+<span class="c1">--bounceVelocity = 400</span>
+<span class="c1">-- Store different initaial velocities for each ball.</span>
+<span class="n">bounceVelocities</span> <span class="o">=</span> <span class="n">fromList</span> <span class="p">[</span><span class="mi">300</span><span class="p">,</span> <span class="mi">600</span><span class="p">]</span>
+
+<span class="n">stepUpdate</span> <span class="o">:</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">Ball</span> <span class="o">-&gt;</span> <span class="kt">Ball</span>
+<span class="n">stepUpdate</span> <span class="n">time</span> <span class="n">aball</span> <span class="o">=</span>
+ <span class="p">{</span> <span class="n">aball</span> <span class="o">|</span> <span class="n">y</span>   <span class="o">=</span> <span class="n">aball</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">aball</span><span class="o">.</span><span class="n">vy</span> <span class="o">*</span> <span class="n">time</span><span class="p">,</span>
+           <span class="n">vy</span>  <span class="o">=</span> <span class="kr">if</span> <span class="p">(</span><span class="n">aball</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="kr">then</span> <span class="n">aball</span><span class="o">.</span><span class="n">initialVy</span>  <span class="kr">else</span> <span class="n">aball</span><span class="o">.</span><span class="n">vy</span> <span class="o">-</span> <span class="n">gravity</span> <span class="o">*</span> <span class="n">time</span> <span class="p">}</span>
+
+<span class="n">ballSignal</span> <span class="o">:</span> <span class="kt">Ball</span> <span class="o">-&gt;</span> <span class="kt">Signal</span> <span class="kt">Ball</span>
+<span class="n">ballSignal</span> <span class="n">aBall</span> <span class="o">=</span>
+  <span class="n">foldp</span> <span class="n">stepUpdate</span> <span class="n">aBall</span>
+    <span class="p">(</span><span class="kt">Signal</span><span class="o">.</span><span class="n">map</span> <span class="n">inSeconds</span> <span class="p">(</span><span class="n">fps</span> <span class="mi">30</span><span class="p">))</span>
+
+<span class="n">ballSignals</span> <span class="o">:</span> <span class="kt">List</span> <span class="p">(</span><span class="kt">Signal</span> <span class="kt">Ball</span><span class="p">)</span>
+<span class="n">ballSignals</span> <span class="o">=</span>  <span class="p">[</span>
+                   <span class="n">ballSignal</span> <span class="p">{</span><span class="n">id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">vx</span> <span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="mi">600</span><span class="p">,</span> <span class="n">initialVy</span> <span class="o">=</span> <span class="mi">600</span><span class="p">}</span>
+                 <span class="p">,</span> <span class="n">ballSignal</span> <span class="p">{</span><span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">vx</span> <span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span> <span class="n">initialVy</span> <span class="o">=</span> <span class="mi">300</span><span class="p">}</span>
+                <span class="p">]</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="n">mapMany</span> <span class="p">(</span><span class="n">drawMany</span><span class="p">)</span> <span class="n">ballSignals</span>
+
+<span class="c1">--main = drawMany [{x = 50, y = -160, vx =0, vy =0}, {x = -50, y = -160, vx=0, vy =0}]</span></code></pre></figure>
+
+<h3 id="a-clock">A clock</h3>
+
+<p>This is one of the examples from the <a href="http://elm-lang.org/examples/clock">elm site</a>.
+You can find other interesting examples there as well.</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Color</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Graphics.Collage</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Time</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="n">main</span> <span class="o">=</span>
+  <span class="kt">Signal</span><span class="o">.</span><span class="n">map</span> <span class="n">clock</span> <span class="p">(</span><span class="n">every</span> <span class="n">second</span><span class="p">)</span>
+
+<span class="n">clock</span> <span class="n">t</span> <span class="o">=</span>
+  <span class="n">collage</span> <span class="mi">400</span> <span class="mi">400</span>
+    <span class="p">[</span> <span class="n">filled</span> <span class="n">lightGrey</span> <span class="p">(</span><span class="n">ngon</span> <span class="mi">12</span> <span class="mi">110</span><span class="p">)</span>
+    <span class="p">,</span> <span class="n">outlined</span> <span class="p">(</span><span class="n">solid</span> <span class="n">grey</span><span class="p">)</span> <span class="p">(</span><span class="n">ngon</span> <span class="mi">12</span> <span class="mi">110</span><span class="p">)</span>
+    <span class="p">,</span> <span class="n">hand</span> <span class="n">orange</span> <span class="mi">100</span> <span class="n">t</span>
+    <span class="p">,</span> <span class="n">hand</span> <span class="n">blue</span> <span class="mi">80</span> <span class="p">(</span><span class="n">t</span><span class="o">/</span><span class="mi">60</span><span class="p">)</span>
+    <span class="p">,</span> <span class="n">hand</span> <span class="n">blue</span> <span class="mi">60</span> <span class="p">(</span><span class="n">t</span><span class="o">/</span><span class="mi">720</span><span class="p">)</span>
+    <span class="p">]</span>
+
+<span class="c1">--generate a lines segment given color lenght and time</span>
+<span class="n">hand</span> <span class="n">clr</span> <span class="n">len</span> <span class="n">time</span> <span class="o">=</span>
+  <span class="kr">let</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="n">degrees</span> <span class="p">(</span><span class="mi">90</span> <span class="o">-</span> <span class="mi">6</span> <span class="o">*</span> <span class="n">inSeconds</span> <span class="n">time</span><span class="p">)</span>
+  <span class="kr">in</span>
+    <span class="n">segment</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">fromPolar</span> <span class="p">(</span><span class="n">len</span><span class="p">,</span><span class="n">angle</span><span class="p">))</span>
+      <span class="o">|&gt;</span> <span class="n">traced</span> <span class="p">(</span><span class="n">solid</span> <span class="n">clr</span><span class="p">)</span></code></pre></figure>
+
+<h3 id="animated-batman">Animated batman</h3>
+
+<p>An here is a cool batman animation. Yan either hypnotize yourself or get dizzy watching this animation!
+In this case creating the image that you wanted to animate was the most work. Unlike the bouncing ball where figuring out how to simulate gravity took more effort.</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Color</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Graphics.Collage</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Time</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="kt">Signal</span><span class="o">.</span><span class="n">map</span> <span class="n">animate</span> <span class="p">(</span><span class="n">every</span> <span class="n">millisecond</span><span class="p">)</span>
+
+<span class="n">animate</span> <span class="n">t</span> <span class="o">=</span> <span class="n">collage</span> <span class="mi">300</span> <span class="mi">300</span>
+  <span class="p">[</span> <span class="n">batman</span>
+  <span class="o">|&gt;</span> <span class="n">move</span> <span class="p">((</span><span class="mi">50</span><span class="o">*</span><span class="p">(</span><span class="n">sin</span> <span class="p">(</span><span class="n">t</span><span class="o">/</span><span class="mi">1000</span><span class="p">))),(</span><span class="mi">50</span><span class="o">*</span><span class="p">(</span><span class="n">cos</span> <span class="p">(</span><span class="n">t</span><span class="o">/</span><span class="mi">1000</span><span class="p">))))</span>
+  <span class="o">|&gt;</span> <span class="n">rotate</span> <span class="p">(</span><span class="mi">10</span><span class="o">*</span><span class="p">(</span><span class="n">t</span><span class="o">/</span><span class="mi">5000</span><span class="p">))</span>
+  <span class="o">|&gt;</span> <span class="n">scale</span> <span class="p">((</span><span class="n">abs</span><span class="p">(</span><span class="n">sin</span> <span class="p">(</span><span class="n">t</span><span class="o">/</span><span class="mi">500</span><span class="p">)))</span> <span class="o">+</span> <span class="mf">0.7</span><span class="p">)</span>
+  <span class="p">]</span>
+
+<span class="n">batman</span> <span class="o">=</span> <span class="n">group</span>
+    <span class="p">[</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">black</span> <span class="p">(</span><span class="n">circle</span> <span class="mi">400</span><span class="p">))</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">darkGrey</span> <span class="p">(</span><span class="n">circle</span> <span class="mi">190</span><span class="p">))</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">white</span> <span class="p">(</span><span class="n">circle</span> <span class="mi">180</span><span class="p">))</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">darkGreen</span> <span class="p">(</span><span class="n">circle</span> <span class="mi">170</span><span class="p">))</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">green</span> <span class="p">(</span><span class="n">circle</span> <span class="mi">160</span><span class="p">))</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">blue</span> <span class="p">(</span><span class="n">circle</span> <span class="mi">150</span><span class="p">))</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">darkBlue</span> <span class="p">(</span><span class="n">circle</span> <span class="mi">140</span><span class="p">))</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">yellow</span> <span class="p">(</span><span class="n">circle</span> <span class="mi">130</span><span class="p">))</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">darkYellow</span> <span class="p">(</span><span class="n">circle</span> <span class="mi">120</span><span class="p">))</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">red</span> <span class="p">(</span><span class="n">circle</span> <span class="mi">110</span><span class="p">))</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">lightRed</span> <span class="p">(</span><span class="n">circle</span> <span class="mi">100</span><span class="p">))</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">black</span> <span class="p">(</span><span class="n">circle</span> <span class="mi">50</span><span class="p">))</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">skinColor</span> <span class="p">(</span><span class="n">circle</span> <span class="mi">50</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="n">scale</span> <span class="mf">0.9</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">black</span> <span class="p">(</span><span class="n">polygon</span> <span class="p">[(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">5</span><span class="p">),(</span><span class="mi">10</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">),(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">)]))</span> <span class="o">|&gt;</span> <span class="n">scale</span> <span class="mi">5</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">29</span><span class="p">,</span><span class="mi">35</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">black</span> <span class="p">(</span><span class="n">ngon</span> <span class="mi">3</span> <span class="mi">30</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="n">rotate</span> <span class="p">(</span><span class="n">degrees</span> <span class="mi">70</span><span class="p">)</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="o">-</span><span class="mi">29</span><span class="p">,</span><span class="mi">35</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">black</span> <span class="p">(</span><span class="n">ngon</span> <span class="mi">3</span> <span class="mi">30</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="n">rotate</span> <span class="p">(</span><span class="n">degrees</span> <span class="mi">110</span><span class="p">)</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">white</span> <span class="p">(</span><span class="n">oval</span> <span class="mi">40</span> <span class="mi">20</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="n">rotate</span> <span class="p">(</span><span class="n">degrees</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">black</span> <span class="p">(</span><span class="n">rect</span> <span class="mi">45</span> <span class="mi">15</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="n">rotate</span> <span class="p">(</span><span class="n">degrees</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="o">-</span><span class="mi">25</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">white</span> <span class="p">(</span><span class="n">oval</span> <span class="mi">40</span> <span class="mi">20</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="n">rotate</span> <span class="p">(</span><span class="n">degrees</span> <span class="mi">150</span><span class="p">)</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="o">-</span><span class="mi">25</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">black</span> <span class="p">(</span><span class="n">rect</span> <span class="mi">45</span> <span class="mi">15</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="n">rotate</span> <span class="p">(</span><span class="n">degrees</span> <span class="mi">160</span><span class="p">)</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">35</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">black</span> <span class="p">(</span><span class="n">rect</span> <span class="mi">20</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span><span class="o">-</span><span class="mi">36</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">black</span> <span class="p">(</span><span class="n">rect</span> <span class="mi">5</span> <span class="mi">2</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="n">rotate</span> <span class="p">(</span><span class="n">degrees</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="p">,</span> <span class="n">move</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="o">-</span><span class="mi">36</span><span class="p">)</span> <span class="p">(</span><span class="n">filled</span> <span class="n">black</span> <span class="p">(</span><span class="n">rect</span> <span class="mi">5</span> <span class="mi">2</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="n">rotate</span> <span class="p">(</span><span class="n">degrees</span> <span class="mi">160</span><span class="p">)</span>
+    <span class="p">]</span>
+
+<span class="n">skinColor</span> <span class="o">=</span> <span class="n">hsl</span> <span class="mf">0.17</span> <span class="mi">1</span> <span class="mf">0.74</span></code></pre></figure>
+

@@ -1,0 +1,455 @@
+<p>In this section we will look at the role played by Types in Elm.</p>
+
+<ul>
+  <li>
+    <p><strong>Statically typed systems:</strong> Languages like C, Java and C# are examples of languages that fall in this category. They are characterized by the fact that the types of all variables have to be declared/known at compile time when the type checking is done.</p>
+  </li>
+  <li>
+    <p><strong>Dynamically typed systems:</strong> Languages like Python and Ruby are examples of languages that fall in this category. They are characterized by the fact that the types of all variables change depending on what is assigned to them. In other words types are associated with values not variables. These languages typically do most of their type checking at run time.</p>
+  </li>
+  <li>
+    <p><strong>Type Inference:</strong> is when the compiler can infer the types of variables and automatically assign them to variables. In case the user has declared the type this information is used to verify the assignment. Type checking like static languages is done at compile time. This approach tries to keep the benefits of static typing while allowing the programmer to not “have to” declare the types all the time.</p>
+  </li>
+</ul>
+
+<p>The subject of type systems is vast and we cannot do justice to the subject here so I have only highlighted a couple of interesting features. You can begin a long journey of understanding and analyzing <a href="https://en.wikipedia.org/wiki/Type_system">Type Systems here.</a>
+It is tempting to think that we have the best situation when we  languages that <a href="http://lambda-the-ultimate.org/node/834">support static typing where possible and dynamic typing where needed</a>.</p>
+
+<p>Elm as we shall see is a statically typed language with support for type inference.</p>
+
+<p>Here we can see a list of</p>
+
+<h3 id="basic-types">Basic Types</h3>
+
+<p>Let us create an instance of each of the Basic types:</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="n">aInt</span> <span class="o">:</span> <span class="kt">Int</span>
+<span class="n">aInt</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">aFloat</span> <span class="o">:</span> <span class="kt">Float</span>
+<span class="n">aFloat</span> <span class="o">=</span> <span class="mf">2.0</span>
+
+<span class="n">aString</span> <span class="o">:</span> <span class="kt">String</span>
+<span class="n">aString</span><span class="o">=</span> <span class="s">"Hi"</span>
+
+<span class="n">aChar</span> <span class="o">:</span> <span class="kt">Char</span>
+<span class="n">aChar</span> <span class="o">=</span> <span class="sc">'c'</span>
+
+<span class="n">aBool</span> <span class="o">:</span> <span class="kt">Bool</span>
+<span class="n">aBool</span> <span class="o">=</span> <span class="kt">True</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="n">flow</span> <span class="n">down</span> <span class="p">[</span>
+           <span class="n">print</span> <span class="s">"The value of aInt is : "</span> <span class="p">(</span><span class="n">aInt</span><span class="p">)</span>
+          <span class="p">,</span><span class="n">print</span> <span class="s">"The value of aFloat is : "</span> <span class="p">(</span><span class="n">aFloat</span><span class="p">)</span>
+          <span class="p">,</span><span class="n">print</span> <span class="s">"The value of aString is : "</span> <span class="p">(</span><span class="n">aString</span><span class="p">)</span>
+          <span class="p">,</span><span class="n">print</span> <span class="s">"The value of aChar is : "</span> <span class="p">(</span><span class="n">aFloat</span><span class="p">)</span>
+          <span class="p">,</span><span class="n">print</span> <span class="s">"The value of aBool is : "</span> <span class="p">(</span><span class="n">aFloat</span><span class="p">)</span>
+         <span class="p">]</span>
+
+<span class="c1">--a helper function to make display easier</span>
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">))</span></code></pre></figure>
+
+<p>You can just enter this code in the <a href="http://elm-lang.org/try">online editor/runner.</a></p>
+
+<h3 id="type-aliases">Type Aliases</h3>
+
+<p>Type aliases are not a mechanism by which you can give more relevant type names to built in types. Here are a couple of examples:</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="kr">type</span> <span class="n">alias</span> <span class="kt">Name</span> <span class="o">=</span> <span class="kt">String</span>
+<span class="kr">type</span> <span class="n">alias</span> <span class="kt">Id</span> <span class="o">=</span> <span class="kt">Int</span>
+
+<span class="n">aName</span> <span class="o">:</span> <span class="n">names</span>
+<span class="n">aName</span> <span class="o">=</span> <span class="s">"Jim"</span>
+
+<span class="n">aId</span> <span class="o">:</span> <span class="kt">Id</span>
+<span class="n">aId</span> <span class="o">=</span> <span class="mi">10001</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="n">flow</span> <span class="n">down</span> <span class="p">[</span>
+            <span class="n">print</span> <span class="s">"The value of aName is : "</span> <span class="p">(</span><span class="n">aName</span><span class="p">)</span>
+           <span class="p">,</span><span class="n">print</span> <span class="s">"The value of aId is : "</span> <span class="p">(</span><span class="n">aId</span><span class="p">)</span>
+          <span class="p">]</span>
+<span class="c1">--a helper function to make display easier</span>
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">))</span></code></pre></figure>
+
+<h3 id="records">Records</h3>
+
+<p>Even though functional programming is all about programming with functions, we still need to work/operate on data.
+This is where records come in.</p>
+
+<p>For example let us consider we want to work with data for an Employee which we take to contain an <code class="highlighter-rouge">id : Int , firstName : String, lastName : String</code>. We can use a record to represent this data. While it takes a little time designing good records to represent your data will make your programs easier to understand and maintain.</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="c1">-- creating a record</span>
+<span class="n">aEmployee</span> <span class="o">=</span> <span class="p">{</span><span class="n">id</span> <span class="o">=</span> <span class="mi">101</span> <span class="p">,</span> <span class="n">firstName</span> <span class="o">=</span> <span class="s">"Michael"</span><span class="p">,</span> <span class="n">lastName</span> <span class="o">=</span> <span class="s">"Jordan"</span><span class="p">}</span>
+
+<span class="c1">-- accessing the fields</span>
+<span class="n">fName</span> <span class="o">=</span> <span class="n">aEmployee</span><span class="o">.</span><span class="n">firstName</span>
+<span class="n">lName</span> <span class="o">=</span> <span class="n">aEmployee</span><span class="o">.</span><span class="n">lastName</span>
+
+<span class="c1">-- field accessors</span>
+<span class="n">fName1</span> <span class="o">=</span>
+  <span class="kt">List</span><span class="o">.</span><span class="n">map</span> <span class="o">.</span><span class="n">firstName</span><span class="p">[</span>
+      <span class="n">aEmployee</span>
+      <span class="p">,{</span><span class="n">id</span> <span class="o">=</span> <span class="mi">101</span><span class="p">,</span> <span class="n">firstName</span> <span class="o">=</span> <span class="s">"Michael"</span><span class="p">,</span> <span class="n">lastName</span> <span class="o">=</span> <span class="s">"Jordan"</span><span class="p">}</span>
+    <span class="p">]</span>   
+
+<span class="c1">-- update fields  of a Record (Notice we did not mutate the id so it is copied over)</span>
+<span class="n">aNewEmployee</span> <span class="o">=</span>
+  <span class="p">{</span><span class="n">aEmployee</span> <span class="o">|</span> <span class="n">firstName</span> <span class="o">=</span> <span class="s">"Magic"</span><span class="p">,</span> <span class="n">lastName</span> <span class="o">=</span> <span class="s">"Johnson"</span> <span class="p">}</span>  
+
+<span class="kr">type</span> <span class="n">alias</span> <span class="kt">Employee</span> <span class="o">=</span>
+  <span class="p">{</span><span class="n">id</span> <span class="o">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">firstName</span> <span class="o">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">lastName</span> <span class="o">:</span> <span class="kt">String</span><span class="p">}</span>
+
+<span class="n">anotherEmployee</span> <span class="o">:</span> <span class="kt">Employee</span>
+<span class="n">anotherEmployee</span> <span class="o">=</span>
+  <span class="p">{</span><span class="n">id</span><span class="o">=</span><span class="mi">103</span><span class="p">,</span> <span class="n">firstName</span> <span class="o">=</span> <span class="s">"Larry"</span><span class="p">,</span> <span class="n">lastName</span> <span class="o">=</span> <span class="s">"Bird"</span> <span class="p">}</span>
+
+<span class="c1">-- pattern matching using record accessors</span>
+<span class="n">getName</span><span class="o">:</span><span class="p">{</span> <span class="n">a</span> <span class="o">|</span> <span class="n">firstName</span> <span class="o">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">lastName</span> <span class="o">:</span> <span class="kt">String</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+<span class="n">getName</span> <span class="p">{</span><span class="n">firstName</span><span class="p">,</span> <span class="n">lastName</span><span class="p">}</span> <span class="o">=</span>
+  <span class="n">firstName</span> <span class="o">++</span> <span class="n">lastName</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="n">flow</span> <span class="n">down</span> <span class="p">[</span>
+             <span class="n">print</span> <span class="s">"The value of aEmployee is : "</span> <span class="p">(</span><span class="n">aEmployee</span><span class="p">)</span>
+            <span class="p">,</span><span class="n">print</span> <span class="s">"The value of aNewEmployee is : "</span> <span class="p">(</span><span class="n">aNewEmployee</span><span class="p">)</span>
+            <span class="p">,</span><span class="n">print</span> <span class="s">"The value of anotherEmployee is : "</span> <span class="p">(</span><span class="n">anotherEmployee</span><span class="p">)</span>
+            <span class="p">,</span><span class="n">print</span> <span class="s">"The value of anotherEmployee is : "</span> <span class="p">(</span><span class="n">getName</span> <span class="n">aEmployee</span><span class="p">)</span>
+          <span class="p">]</span>
+
+<span class="c1">--a helper function to make display easier</span>
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">))</span></code></pre></figure>
+
+<p>Records are a lightweight data structure similar to a tuple in that it can hold a fixed number of different types. Unlike tuples the elements of a record have names and accessors that allow us to work with the data stored in a record. You can work without type aliases for a record, but if you are going to create multiple instances of the record, then it is more compact and less error prone to create the type alias.</p>
+
+<p>It is important to keep in mind some of the distinctions between Objects and Records, there is a great <a href="http://elm-lang.org/docs/records">description of this here, along with more information on records.</a></p>
+
+<h3 id="enumerations">Enumerations</h3>
+
+<p>Often we need to describe fixed sets of values in our programs.
+For example we can describe the state of a program as <code class="highlighter-rouge"><span class="p">{</span><span class="err">NotStarted,</span><span class="w"> </span><span class="err">Running,</span><span class="w"> </span><span class="err">Completed</span><span class="p">}</span></code>. Of course we could represent this as a set of integers, but Enumerations are a much nicer way to do this.
+We then use the Enumerations typically as switches to control the logic we use to handle these different cases.</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="kr">type</span> <span class="kt">Status</span> <span class="o">=</span> <span class="kt">NotStarted</span><span class="o">|</span><span class="kt">Running</span><span class="o">|</span><span class="kt">Completed</span><span class="o">|</span><span class="kt">Crashed</span>
+
+<span class="n">log</span> <span class="o">:</span> <span class="kt">Status</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+<span class="n">log</span> <span class="n">status</span> <span class="o">=</span>
+ <span class="kr">case</span> <span class="n">status</span> <span class="kr">of</span>
+   <span class="kt">NotStarted</span> <span class="o">-&gt;</span> <span class="s">"The program is not started"</span>
+   <span class="kt">Running</span> <span class="o">-&gt;</span> <span class="s">"The program is Running"</span>
+   <span class="kt">Completed</span> <span class="o">-&gt;</span> <span class="s">"The program is Completed"</span>
+   <span class="kt">Crashed</span> <span class="o">-&gt;</span> <span class="s">"The program has Crashed"</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="n">flow</span> <span class="n">down</span> <span class="p">[</span>
+             <span class="n">print</span> <span class="s">"Program Status: "</span> <span class="p">(</span><span class="n">log</span> <span class="kt">NotStarted</span><span class="p">)</span>
+            <span class="p">,</span><span class="n">print</span> <span class="s">"Program Status: "</span> <span class="p">(</span><span class="n">log</span> <span class="kt">Running</span><span class="p">)</span>
+            <span class="p">,</span><span class="n">print</span> <span class="s">"Program Status: "</span> <span class="p">(</span><span class="n">log</span> <span class="kt">Completed</span><span class="p">)</span>
+            <span class="p">,</span><span class="n">print</span> <span class="s">"Program Status: "</span> <span class="p">(</span><span class="n">log</span> <span class="kt">Crashed</span><span class="p">)</span>
+          <span class="p">]</span>
+<span class="c1">--a helper function to make display easier</span>
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">value</span><span class="p">))</span></code></pre></figure>
+
+<p>In this case we have just implement simple function that converts the different Status cases to strings. But you could write similar functions to trigger different functions based on  the Status enumeration.</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="kr">type</span> <span class="kt">Direction</span> <span class="o">=</span> <span class="kt">Left</span><span class="o">|</span><span class="kt">Right</span><span class="o">|</span><span class="kt">Up</span><span class="o">|</span><span class="kt">Down</span>
+
+<span class="kr">type</span> <span class="n">alias</span> <span class="kt">Point</span> <span class="o">=</span> <span class="p">{</span> <span class="n">x</span> <span class="o">:</span> <span class="kt">Float</span><span class="p">,</span> <span class="n">y</span> <span class="o">:</span> <span class="kt">Float</span><span class="p">}</span>
+
+<span class="n">movePoint</span> <span class="o">:</span> <span class="kt">Point</span> <span class="o">-&gt;</span> <span class="kt">Direction</span> <span class="o">-&gt;</span> <span class="kt">Point</span>
+<span class="n">movePoint</span> <span class="n">aPoint</span> <span class="n">aDirection</span> <span class="o">=</span>
+     <span class="kr">case</span> <span class="n">aDirection</span> <span class="kr">of</span>
+      <span class="kt">Left</span> <span class="o">-&gt;</span> <span class="p">{</span><span class="n">aPoint</span> <span class="o">|</span> <span class="n">x</span> <span class="o">=</span> <span class="n">aPoint</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">}</span>
+      <span class="kt">Right</span> <span class="o">-&gt;</span> <span class="p">{</span><span class="n">aPoint</span> <span class="o">|</span> <span class="n">x</span> <span class="o">=</span> <span class="n">aPoint</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}</span>
+      <span class="kt">Up</span> <span class="o">-&gt;</span> <span class="p">{</span><span class="n">aPoint</span> <span class="o">|</span> <span class="n">y</span> <span class="o">=</span> <span class="n">aPoint</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}</span>
+      <span class="kt">Down</span> <span class="o">-&gt;</span> <span class="p">{</span><span class="n">aPoint</span> <span class="o">|</span> <span class="n">y</span> <span class="o">=</span> <span class="n">aPoint</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">}</span>
+
+<span class="n">p</span> <span class="o">:</span> <span class="kt">Point</span>
+<span class="n">p</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">}</span>   
+
+<span class="n">main</span> <span class="o">=</span> <span class="n">flow</span> <span class="n">down</span> <span class="p">[</span>
+             <span class="n">print</span> <span class="s">"The starting point p : "</span> <span class="p">(</span><span class="n">movePoint</span> <span class="n">p</span> <span class="kt">Up</span><span class="p">)</span>
+            <span class="p">,</span><span class="n">print</span> <span class="s">"P moved Up gives : "</span> <span class="p">(</span><span class="n">movePoint</span> <span class="n">p</span> <span class="kt">Up</span><span class="p">)</span>
+            <span class="p">,</span><span class="n">print</span> <span class="s">"p moved Down gives"</span> <span class="p">(</span><span class="n">movePoint</span> <span class="n">p</span> <span class="kt">Down</span><span class="p">)</span>
+          <span class="p">]</span>
+<span class="c1">--a helper function to make display easier</span>
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">))</span></code></pre></figure>
+
+<h3 id="algebraic-data-types">Algebraic Data Types</h3>
+
+<p>An algebraic data type (ADT) allows us to create a composite type that consists of other types. (A record is also a composite type which requires all the contained sub types that go into its definition to be present as specified.)</p>
+
+<p><strong>Union Types</strong> - <strong>OR</strong> Types:</p>
+
+<p>Let us look at an example of an ADT (Union Type) arising in a in a situation where we are modeling two types of geometric objects: Circles and Squares. Then we could write a program to manipulate them as follows:</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Graphics.Collage</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Color</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="kr">type</span> <span class="n">alias</span> <span class="kt">Radius</span> <span class="o">=</span> <span class="kt">Float</span>
+<span class="kr">type</span> <span class="n">alias</span> <span class="kt">Side</span> <span class="o">=</span> <span class="kt">Float</span>
+<span class="kr">type</span> <span class="kt">Shape</span> <span class="o">=</span> <span class="kt">Circle</span>  <span class="kt">Radius</span> <span class="o">|</span> <span class="kt">Square</span> <span class="kt">Side</span>
+
+<span class="n">drawShape</span> <span class="o">:</span> <span class="kt">Shape</span> <span class="o">-&gt;</span> <span class="kt">Graphics</span><span class="o">.</span><span class="kt">Collage</span><span class="o">.</span><span class="kt">Shape</span>
+<span class="n">drawShape</span> <span class="n">aShape</span> <span class="o">=</span>
+    <span class="kr">case</span> <span class="n">aShape</span> <span class="kr">of</span>
+      <span class="kt">Circle</span> <span class="n">radius</span><span class="o">-&gt;</span> <span class="kt">Graphics</span><span class="o">.</span><span class="kt">Collage</span><span class="o">.</span><span class="n">circle</span> <span class="n">radius</span>
+      <span class="kt">Square</span> <span class="n">side</span> <span class="o">-&gt;</span> <span class="kt">Graphics</span><span class="o">.</span><span class="kt">Collage</span><span class="o">.</span><span class="n">square</span> <span class="n">side</span>
+
+<span class="n">areaShape</span> <span class="o">:</span> <span class="kt">Shape</span> <span class="o">-&gt;</span> <span class="kt">Float</span>
+<span class="n">areaShape</span> <span class="n">aShape</span> <span class="o">=</span>
+    <span class="kr">case</span> <span class="n">aShape</span> <span class="kr">of</span>
+      <span class="kt">Circle</span> <span class="n">radius</span><span class="o">-&gt;</span> <span class="mf">3.14</span> <span class="o">*</span> <span class="n">radius</span><span class="o">*</span><span class="n">radius</span>
+      <span class="kt">Square</span> <span class="n">side</span> <span class="o">-&gt;</span> <span class="n">side</span> <span class="o">*</span> <span class="n">side</span>
+
+<span class="n">aCircle</span> <span class="o">=</span> <span class="kt">Circle</span> <span class="mi">50</span>
+<span class="n">aSquare</span> <span class="o">=</span> <span class="kt">Square</span> <span class="mi">100</span>
+<span class="n">main</span> <span class="o">=</span>
+ <span class="n">collage</span> <span class="mi">300</span> <span class="mi">300</span>
+  <span class="p">[</span><span class="n">filled</span> <span class="n">red</span> <span class="p">(</span><span class="n">drawShape</span> <span class="p">(</span><span class="n">aSquare</span><span class="p">))</span>
+  <span class="p">,</span><span class="n">filled</span> <span class="n">blue</span> <span class="p">(</span><span class="n">drawShape</span> <span class="p">(</span><span class="n">aCircle</span><span class="p">))</span>
+  <span class="p">,</span><span class="n">print</span> <span class="s">"The area of the circle is : "</span> <span class="p">(</span><span class="n">toString</span><span class="p">(</span><span class="n">areaShape</span> <span class="p">(</span><span class="n">aCircle</span><span class="p">)))</span>
+  <span class="c1">--,print "The area of the square is : " (toString(areaShape (aSquare)))</span>
+  <span class="p">]</span>
+
+<span class="c1">--a helper function to make display easier</span>
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">move</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">)</span> <span class="o">&lt;|</span><span class="n">toForm</span> <span class="o">&lt;|</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">)</span><span class="o">++</span> <span class="s">"pixels"</span><span class="p">)</span></code></pre></figure>
+
+<p>Notice how using pattern matching we are able to route the flow of the program to the appropriate section of code based on the
+type.</p>
+
+<h3 id="generics-or-parametrized-types">Generics or Parametrized Types</h3>
+
+<p>Now we come to an extremely powerful concept; can we write
+code that will work for all types. This is especially useful when we are designing data structures that store different types. We see in this section that types can take parameters that are other types. And this will give us great flexibility and we can write more “generic” code.</p>
+
+<p><strong>Creating an ADT:</strong></p>
+
+<p>So let us look at a simple data structure, suppose we have a situation where we we want to have a type that can have either an Integer or be empty.</p>
+
+<p>Here is a simple implementation using ADTs:</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"> <span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+ <span class="kr">import</span> <span class="nn">Graphics.Collage</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+ <span class="kr">import</span> <span class="nn">Color</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+ <span class="kr">type</span> <span class="kt">OptionalInt</span> <span class="o">=</span> <span class="kt">Nothing</span> <span class="o">|</span><span class="kt">OptionalInt</span> <span class="kt">Int</span>
+
+ <span class="n">extract</span> <span class="o">:</span> <span class="kt">OptionalInt</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+ <span class="n">extract</span> <span class="n">aOptionalInt</span> <span class="o">=</span>
+   <span class="kr">case</span> <span class="n">aOptionalInt</span> <span class="kr">of</span>
+     <span class="kt">OptionalInt</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">toString</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+     <span class="kt">Nothing</span> <span class="o">-&gt;</span> <span class="s">""</span>
+
+ <span class="n">aOptionalInt</span> <span class="o">=</span> <span class="kt">OptionalInt</span> <span class="mi">3</span>
+
+ <span class="n">main</span> <span class="o">=</span>
+  <span class="n">flow</span> <span class="n">down</span>
+   <span class="p">[</span><span class="n">print</span> <span class="s">"The value stored in OptionalInt is : "</span> <span class="p">(</span><span class="n">extract</span> <span class="n">aOptionalInt</span><span class="p">)</span>
+   <span class="c1">--,print "The area of the square is : " (toString(areaShape (aSquare)))</span>
+   <span class="p">]</span>
+
+ <span class="c1">--a helper function to make display easier</span>
+ <span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">))</span>
+ </code></pre></figure>
+
+<p>So that is great, we are about to celebrate when we realize that we need to have OptionalFloat as well!</p>
+
+<p><strong>Creating a Parametrized ADT :</strong></p>
+
+<p>The best way to create containers that can store multiple types is to use a parametrized ADT. Here is an example where we  modify the OptionalInt type to a parametrized ADT so that it can store any type!</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Graphics.Collage</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Color</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="kr">type</span> <span class="kt">OptionalValue</span> <span class="n">a</span> <span class="o">=</span> <span class="kt">Nothing</span> <span class="o">|</span><span class="kt">OptionalValue</span> <span class="n">a</span>
+
+<span class="n">extract</span> <span class="o">:</span> <span class="kt">OptionalValue</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+<span class="n">extract</span> <span class="n">aOptionalValue</span> <span class="o">=</span>
+  <span class="kr">case</span> <span class="n">aOptionalValue</span> <span class="kr">of</span>
+    <span class="kt">OptionalValue</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">toString</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="kt">Nothing</span> <span class="o">-&gt;</span> <span class="s">""</span>
+
+<span class="n">intOptionalValue</span> <span class="o">:</span> <span class="kt">OptionalValue</span> <span class="kt">Int</span>
+<span class="n">intOptionalValue</span> <span class="o">=</span> <span class="kt">OptionalValue</span> <span class="mi">3</span>
+
+<span class="n">floatOptionalValue</span> <span class="o">:</span> <span class="kt">OptionalValue</span> <span class="kt">Float</span>
+<span class="n">floatOptionalValue</span> <span class="o">=</span> <span class="kt">OptionalValue</span> <span class="mf">5.0</span>
+
+<span class="n">main</span> <span class="o">=</span>
+ <span class="n">flow</span> <span class="n">down</span>
+  <span class="p">[</span><span class="n">print</span> <span class="s">"The value stored in OptionalValue is : "</span> <span class="p">(</span><span class="n">extract</span> <span class="n">intOptionalValue</span><span class="p">)</span>
+   <span class="p">,</span><span class="n">print</span> <span class="s">"The value stored in OptionalValue is : "</span> <span class="p">(</span><span class="n">extract</span> <span class="n">floatOptionalValue</span><span class="p">)</span>
+  <span class="p">]</span>
+
+<span class="c1">--a helper function to make display easier</span>
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">))</span></code></pre></figure>
+
+<p>As the type declaration shows
+<code class="highlighter-rouge">type OptionalValue a = Nothing |OptionalValue a</code>
+OptionalValue is a parametrized type that takes a type parameter <code class="highlighter-rouge">a</code> as part of its definition.</p>
+
+<p>Then when we create an instances of OptionalValue like:</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="n">intOptionalValue</span> <span class="o">:</span> <span class="kt">OptionalValue</span> <span class="kt">Int</span>
+<span class="n">intOptionalValue</span> <span class="o">=</span> <span class="kt">OptionalValue</span> <span class="mi">3</span>
+
+<span class="n">floatOptionalValue</span> <span class="o">:</span> <span class="kt">OptionalValue</span> <span class="kt">Float</span>
+<span class="n">floatOptionalValue</span> <span class="o">=</span> <span class="kt">OptionalValue</span> <span class="mf">5.0</span></code></pre></figure>
+
+<p>we specify the type parameter that we want to use.</p>
+
+<p>You will find that using parametrized types an extremely simple, expressive and powerful programming technique.</p>
+
+<p>In Elm there is a built in type called <a href="http://package.elm-lang.org/packages/elm-lang/core/3.0.0/">Maybe</a> that is the same as the Optional type that we just created for illustration purposes.</p>
+
+<h3 id="recursive-types">Recursive Types</h3>
+
+<p>And now we come to the question can a type refer to itself in its definition? You might ask why do I want to do that?
+Here is a simple example of a binary tree from the elm documentation:</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Text</span>
+
+<span class="kr">type</span> <span class="kt">Tree</span> <span class="n">a</span>
+    <span class="o">=</span> <span class="kt">Empty</span>
+    <span class="o">|</span> <span class="kt">Node</span> <span class="n">a</span> <span class="p">(</span><span class="kt">Tree</span> <span class="n">a</span><span class="p">)</span> <span class="p">(</span><span class="kt">Tree</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="n">empty</span> <span class="o">:</span> <span class="kt">Tree</span> <span class="n">a</span>
+<span class="n">empty</span> <span class="o">=</span>
+    <span class="kt">Empty</span>
+
+<span class="n">singleton</span> <span class="o">:</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">Tree</span> <span class="n">a</span>
+<span class="n">singleton</span> <span class="n">v</span> <span class="o">=</span>
+    <span class="kt">Node</span> <span class="n">v</span> <span class="kt">Empty</span> <span class="kt">Empty</span>
+
+<span class="n">insert</span> <span class="o">:</span> <span class="n">comparable</span> <span class="o">-&gt;</span> <span class="kt">Tree</span> <span class="n">comparable</span> <span class="o">-&gt;</span> <span class="kt">Tree</span> <span class="n">comparable</span>
+<span class="n">insert</span> <span class="n">x</span> <span class="n">tree</span> <span class="o">=</span>
+    <span class="kr">case</span> <span class="n">tree</span> <span class="kr">of</span>
+      <span class="kt">Empty</span> <span class="o">-&gt;</span>
+          <span class="n">singleton</span> <span class="n">x</span>
+
+      <span class="kt">Node</span> <span class="n">y</span> <span class="n">left</span> <span class="n">right</span> <span class="o">-&gt;</span>
+          <span class="kr">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span> <span class="kr">then</span>
+              <span class="kt">Node</span> <span class="n">y</span> <span class="n">left</span> <span class="p">(</span><span class="n">insert</span> <span class="n">x</span> <span class="n">right</span><span class="p">)</span>
+
+          <span class="kr">else</span> <span class="kr">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">y</span> <span class="kr">then</span>
+              <span class="kt">Node</span> <span class="n">y</span> <span class="p">(</span><span class="n">insert</span> <span class="n">x</span> <span class="n">left</span><span class="p">)</span> <span class="n">right</span>
+
+          <span class="kr">else</span>
+              <span class="n">tree</span>
+
+<span class="n">fromList</span> <span class="o">:</span> <span class="kt">List</span> <span class="n">comparable</span> <span class="o">-&gt;</span> <span class="kt">Tree</span> <span class="n">comparable</span>
+<span class="n">fromList</span> <span class="n">xs</span> <span class="o">=</span>
+    <span class="kt">List</span><span class="o">.</span><span class="n">foldl</span> <span class="n">insert</span> <span class="n">empty</span> <span class="n">xs</span>
+
+<span class="n">depth</span> <span class="o">:</span> <span class="kt">Tree</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">depth</span> <span class="n">tree</span> <span class="o">=</span>
+    <span class="kr">case</span> <span class="n">tree</span> <span class="kr">of</span>
+      <span class="kt">Empty</span> <span class="o">-&gt;</span> <span class="mi">0</span>
+      <span class="kt">Node</span> <span class="n">v</span> <span class="n">left</span> <span class="n">right</span> <span class="o">-&gt;</span>
+          <span class="mi">1</span> <span class="o">+</span> <span class="n">max</span> <span class="p">(</span><span class="n">depth</span> <span class="n">left</span><span class="p">)</span> <span class="p">(</span><span class="n">depth</span> <span class="n">right</span><span class="p">)</span>
+
+<span class="n">map</span> <span class="o">:</span> <span class="p">(</span><span class="n">a</span> <span class="o">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Tree</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">Tree</span> <span class="n">b</span>
+<span class="n">map</span> <span class="n">f</span> <span class="n">tree</span> <span class="o">=</span>
+    <span class="kr">case</span> <span class="n">tree</span> <span class="kr">of</span>
+      <span class="kt">Empty</span> <span class="o">-&gt;</span> <span class="kt">Empty</span>
+      <span class="kt">Node</span> <span class="n">v</span> <span class="n">left</span> <span class="n">right</span> <span class="o">-&gt;</span>
+          <span class="kt">Node</span> <span class="p">(</span><span class="n">f</span> <span class="n">v</span><span class="p">)</span> <span class="p">(</span><span class="n">map</span> <span class="n">f</span> <span class="n">left</span><span class="p">)</span> <span class="p">(</span><span class="n">map</span> <span class="n">f</span> <span class="n">right</span><span class="p">)</span>
+
+<span class="n">t1</span> <span class="o">=</span> <span class="n">fromList</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="n">fromList</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="n">main</span> <span class="o">:</span> <span class="kt">Element</span>
+<span class="n">main</span> <span class="o">=</span>
+    <span class="n">flow</span> <span class="n">down</span>
+        <span class="p">[</span> <span class="n">display</span> <span class="s">"depth"</span> <span class="n">depth</span> <span class="n">t1</span>
+        <span class="p">,</span> <span class="n">display</span> <span class="s">"depth"</span> <span class="n">depth</span> <span class="n">t2</span>
+        <span class="p">,</span> <span class="n">display</span> <span class="s">"map ((+)1)"</span> <span class="p">(</span><span class="n">map</span> <span class="p">((</span><span class="o">+</span><span class="p">)</span><span class="mi">1</span><span class="p">))</span> <span class="n">t2</span>
+        <span class="p">]</span>
+
+<span class="n">display</span> <span class="o">:</span> <span class="kt">String</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="kt">Tree</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Tree</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">Element</span>
+<span class="n">display</span> <span class="n">name</span> <span class="n">f</span> <span class="n">value</span> <span class="o">=</span>
+    <span class="n">name</span> <span class="o">++</span> <span class="s">" ("</span> <span class="o">++</span> <span class="n">toString</span> <span class="n">value</span> <span class="o">++</span> <span class="s">") &amp;rArr;</span><span class="se">\n</span><span class="s">    "</span> <span class="o">++</span> <span class="n">toString</span> <span class="p">(</span><span class="n">f</span> <span class="n">value</span><span class="p">)</span> <span class="o">++</span> <span class="s">"</span><span class="se">\n</span><span class="s"> "</span>
+        <span class="o">|&gt;</span> <span class="kt">Text</span><span class="o">.</span><span class="n">fromString</span>
+        <span class="o">|&gt;</span> <span class="kt">Text</span><span class="o">.</span><span class="n">monospace</span>
+        <span class="o">|&gt;</span> <span class="n">leftAligned</span></code></pre></figure>
+
+<h3 id="type-classes---number-appendable-comparable-etc">Type Classes - number, appendable, comparable etc.</h3>
+
+<p>I will not get into a discussion on Typeclasses as the creators of Elm wanted to suppress the complexity of the more advanced usage of types. (You will have to refer to my Haskell notes to see a description of typeclasses.)
+Anyway, <code class="highlighter-rouge">number</code> (is essentially a built-in type class in Elm, there are a few more like this (e.g appendable)) and represents a type that supports addition, subtraction, etc. I did not manage to find a lot of documentation on typeclasses in Elm so these comments are based on my experimentation and may be inaccurate.</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="n">aInt</span> <span class="o">:</span><span class="kt">Int</span>
+<span class="n">aInt</span> <span class="o">=</span><span class="mi">3</span>
+
+<span class="n">aFloat</span> <span class="o">:</span> <span class="kt">Float</span>
+<span class="n">aFloat</span> <span class="o">=</span> <span class="mf">3.0</span>
+
+<span class="n">triple</span> <span class="o">:</span> <span class="n">number</span> <span class="o">-&gt;</span> <span class="n">number</span>
+<span class="n">triple</span> <span class="n">number</span> <span class="o">=</span>
+  <span class="mi">3</span><span class="o">*</span><span class="n">number</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="n">flow</span> <span class="n">down</span> <span class="p">[</span>
+            <span class="n">print</span> <span class="s">"The value of triple aInt is : "</span> <span class="p">(</span><span class="n">triple</span> <span class="n">aInt</span><span class="p">)</span>
+           <span class="p">,</span><span class="n">print</span> <span class="s">"The value of triple aFloat is : "</span> <span class="p">(</span><span class="n">triple</span> <span class="n">aFloat</span><span class="p">)</span>
+          <span class="p">]</span>
+
+<span class="c1">--a helper function to make display easier</span>
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">))</span></code></pre></figure>
+
+<p>So what is see above is a simple use of the <code class="highlighter-rouge">number</code> type. The function triple is declare to have type <code class="highlighter-rouge">triple : number -&gt; number</code>. So that means this function will accept any type that supports operations like +, - etc. (or more precisely is an instance of the number typeclass.)</p>
+
+<p>Okay, that is about all the detail we will go into here on typeclasses but at least you get a sense of how to use it, and a flavor of what it means.</p>
+
+<h3 id="collections">Collections:</h3>
+
+<p>Elm has built in support for some essential collection data types:</p>
+
+<ul>
+  <li><strong>Lists</strong> : is a collection of values of the same type, that can have different/changing length.</li>
+  <li><strong>Tuples</strong> : are kind of “dual” to lists in that they are collections that have fixed length, but can has varying types.</li>
+  <li><strong>Dictionaries</strong> is an extensible collection that stores pairs of keys and values.</li>
+  <li><strong>Arrays</strong></li>
+</ul>
+
+<p>A simple example of the usage of the Elm dictionary:</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Dict</span> <span class="n">exposing</span> <span class="p">(</span><span class="kt">Dict</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">:</span> <span class="kt">Dict</span> <span class="kt">String</span> <span class="kt">Int</span>
+<span class="n">a</span> <span class="o">=</span> <span class="kt">Dict</span><span class="o">.</span><span class="n">insert</span> <span class="s">"one"</span> <span class="mi">1</span> <span class="kt">Dict</span><span class="o">.</span><span class="n">empty</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="kt">Dict</span><span class="o">.</span><span class="n">insert</span> <span class="s">"two"</span> <span class="mi">2</span> <span class="n">a</span>
+
+<span class="n">c</span> <span class="o">:</span> <span class="kt">Dict</span> <span class="kt">String</span> <span class="kt">Int</span>
+<span class="n">c</span><span class="o">=</span> <span class="kt">Dict</span><span class="o">.</span><span class="n">update</span> <span class="s">"two"</span> <span class="n">triple</span> <span class="n">b</span>
+
+<span class="c1">-- use this function to update a value if found</span>
+<span class="n">triple</span> <span class="o">:</span> <span class="kt">Maybe</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Maybe</span> <span class="kt">Int</span>
+<span class="n">triple</span> <span class="n">i</span> <span class="o">=</span>
+ <span class="kr">case</span> <span class="n">i</span> <span class="kr">of</span>
+   <span class="kt">Nothing</span> <span class="o">-&gt;</span> <span class="kt">Just</span> <span class="mi">0</span>
+   <span class="kt">Just</span> <span class="n">i</span>  <span class="o">-&gt;</span> <span class="kt">Just</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="n">flow</span> <span class="n">down</span> <span class="p">[</span>
+          <span class="n">print</span> <span class="s">"a is: "</span> <span class="n">a</span>
+         <span class="p">,</span><span class="n">print</span> <span class="s">"b is: "</span> <span class="n">b</span>
+         <span class="p">,</span><span class="n">print</span> <span class="s">"c is: "</span> <span class="n">c</span>
+        <span class="p">]</span>
+
+<span class="c1">--a helper function to make display easier</span>
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">))</span></code></pre></figure>
+

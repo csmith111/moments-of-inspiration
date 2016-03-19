@@ -1,0 +1,444 @@
+<p>In this post we will look at the basics of programming in Elm. We will also encounter some of the essential concepts of Functional programming.</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="c1">--defining the function double</span>
+<span class="n">double</span> <span class="o">:</span> <span class="n">number</span> <span class="o">-&gt;</span> <span class="n">number</span>
+<span class="n">double</span> <span class="n">number</span> <span class="o">=</span>
+  <span class="mi">2</span><span class="o">*</span><span class="n">number</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="n">print</span> <span class="s">"The double of 5 is : "</span> <span class="p">(</span><span class="n">double</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="c1">--a helper function to make display easier</span>
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">))</span></code></pre></figure>
+
+<p>You can just enter this code in the <a href="http://elm-lang.org/try">online editor/runner.</a></p>
+
+<p>Let us see if we can understand how this code works.
+First we define the function <code class="highlighter-rouge">double</code> that  takes a number and doubles it. The elm compiler infers this “function signature” and this is how it is expressed in Elm syntax <code class="highlighter-rouge">double : number -&gt; number</code>. You can read this as <code class="highlighter-rouge">double is a function that returns a number and takes a number as input</code>.</p>
+
+<p>It is always good practice to figure out the signature of the functions that we are creating and declare it. This way the compiler will verify it for you and let you know if the function that you have created has a bug in it and does not match the signature.</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="c1">--defining functions</span>
+<span class="n">sqr</span> <span class="o">:</span> <span class="n">number</span> <span class="o">-&gt;</span> <span class="n">number</span>
+<span class="n">sqr</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="n">n</span><span class="o">*</span><span class="n">n</span>
+
+<span class="c1">-- convert temperature in Centigrade to Fahrenheit</span>
+<span class="n">centigradeToFahrenheit</span> <span class="o">:</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">Float</span>
+<span class="n">centigradeToFahrenheit</span> <span class="n">c</span> <span class="o">=</span>
+  <span class="n">c</span> <span class="o">*</span> <span class="mi">9</span><span class="o">/</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span>
+
+<span class="n">add</span> <span class="o">:</span> <span class="n">number</span> <span class="o">-&gt;</span> <span class="n">number</span> <span class="o">-&gt;</span> <span class="n">number</span>
+<span class="n">add</span> <span class="n">a</span> <span class="n">b</span> <span class="o">=</span>
+  <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="n">isEven</span> <span class="o">:</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+<span class="n">isEven</span> <span class="n">n</span> <span class="o">=</span>
+   <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+
+<span class="n">increment</span> <span class="o">:</span> <span class="n">number</span> <span class="o">-&gt;</span> <span class="n">number</span>
+<span class="n">increment</span> <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="n">flow</span> <span class="n">down</span> <span class="p">[</span><span class="n">print</span> <span class="s">"The sqr of 5 is : "</span> <span class="p">(</span><span class="n">sqr</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="p">,</span><span class="n">print</span> <span class="s">"40 degrees centigrade in Fahrenheit is : "</span> <span class="p">(</span><span class="n">centigradeToFahrenheit</span> <span class="mi">40</span><span class="p">)</span>
+        <span class="p">,</span><span class="n">print</span> <span class="s">"Is 5 an even number : "</span> <span class="p">(</span><span class="n">isEven</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="p">,</span><span class="n">print</span> <span class="s">"3 + 2 is : "</span> <span class="p">(</span><span class="n">add</span> <span class="mi">3</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="p">,</span><span class="n">print</span> <span class="s">"incrementing 5 we get : "</span> <span class="p">(</span><span class="n">increment</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="p">]</span>
+
+<span class="c1">--a helper function to make display easier</span>
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">))</span></code></pre></figure>
+
+<p>Okay time to make some functions of your own.</p>
+
+<h3 id="exercises">Exercises</h3>
+
+<ol>
+  <li>
+    <p>Create the functions <code class="highlighter-rouge">subtract</code>, <code class="highlighter-rouge">divide</code>, <code class="highlighter-rouge">multiply</code> just like we did the <code class="highlighter-rouge">add</code> function.</p>
+  </li>
+  <li>
+    <p>Create a function to convert from kilograms to pounds.</p>
+  </li>
+  <li>
+    <p>Slightly more challenging create a function to check if a string is a palindrome. (Hint: there is a function called <code class="highlighter-rouge">reverse</code> that you can use. In case you are stuck you can see the solution below.)</p>
+  </li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">String</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="c1">--defining the function is Palindrome</span>
+<span class="n">isPalindrome</span> <span class="o">:</span> <span class="kt">String</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+<span class="n">isPalindrome</span> <span class="n">aString</span> <span class="o">=</span>
+  <span class="n">aString</span> <span class="o">==</span> <span class="n">reverse</span> <span class="n">aString</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="n">print</span> <span class="s">"Testing for Palindrome : "</span> <span class="p">(</span><span class="n">isPalindrome</span> <span class="s">"madamimadam"</span><span class="p">)</span>
+
+<span class="c1">--a helper function to make display easier</span>
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">))</span></code></pre></figure>
+
+<h3 id="recursive-functions">Recursive Functions</h3>
+
+<p>Recursive functions are simply functions that refer to/call themselves in their definition. Recursion is a powerful technique to solve problems in an intuitive and compact manner. The common example used to illustrate this is the factorial function:
+<script type="math/tex">n! = n*(n-1)!</script>. (Okay for those of you interested in mathematics and typesetting to see the previous expression, we have to get $ \LaTeX $ working! Latex, Javascript, Jekyll and markdown can all work with each other is something incredible. The fact that I was about to get it up an running in a few minutes is amazing!) As you can see the definition of the function refers to itself. This is natural to do in mathematics, can we do the same in an Elm program? The answer is  yes. Let us see how this looks:</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">List</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="c1">--Recursion</span>
+<span class="n">facR</span> <span class="o">:</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">facR</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="kr">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="kr">then</span>
+    <span class="mi">1</span>
+  <span class="kr">else</span>
+    <span class="n">n</span><span class="o">*</span><span class="n">facR</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">hemachandra</span> <span class="o">:</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">hemachandra</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="kr">if</span> <span class="n">n</span><span class="o">==</span><span class="mi">0</span> <span class="kr">then</span>
+     <span class="mi">1</span>
+  <span class="kr">else</span> <span class="kr">if</span>  <span class="n">n</span><span class="o">==</span><span class="mi">1</span> <span class="kr">then</span>
+     <span class="mi">1</span>
+  <span class="kr">else</span>
+   <span class="n">hemachandra</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">hemachandra</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="n">flow</span> <span class="n">down</span> <span class="p">[</span><span class="n">print</span> <span class="s">"factorial(5) is : "</span> <span class="p">(</span><span class="n">facR</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="p">,</span><span class="n">print</span> <span class="s">"The 5'th Hemachandra number is : "</span> <span class="p">(</span><span class="n">hemachandra</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="p">]</span>
+
+<span class="c1">--a helper function to make display easier</span>
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">))</span></code></pre></figure>
+
+<p>The recursion pattern has two ingredients:</p>
+
+<ul>
+  <li><strong>The termination condition:</strong> Need to handle all conditions that the recursion has to terminate for. For the factorial function it is when n gets to 0 we terminate the recursion. For those using recursion this is often the source of bugs, which leads to infinite recursion and program crashes!</li>
+  <li><strong>The recursive step:</strong> For all values of n other than the terminal one we describe how to compute  the next value.</li>
+</ul>
+
+<p>The second example that I have included generates the <a href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci numbers</a>. These numbers we noticed much earlier by <a href="https://en.wikipedia.org/wiki/Hemachandra">Hemachandra</a>.
+Fields medallist <a href="https://en.wikipedia.org/wiki/Manjul_Bhargava">Manjul Bhargava</a> has been referring to the Hemanchandra numbers and how he was <a href="https://www.youtube.com/watch?v=siFBqH-LaQQ">inspired by ancient indian mathematicians</a>. So we called the function <code class="highlighter-rouge">hemachandra</code> in this example.</p>
+
+<p>While recursion is a good technique to use to solve problems,
+often in programs we just end up combining library functions to write our code. So we could write the factorial function as
+<code class="highlighter-rouge">factorial n = product [1..n]</code>.</p>
+
+<h3 id="exercises-1">Exercises</h3>
+
+<ul>
+  <li>Define a recursive function <code class="highlighter-rouge">power</code> such that <code class="highlighter-rouge">power x y</code> raises <code class="highlighter-rouge">x</code> to the <code class="highlighter-rouge">y</code> power.</li>
+</ul>
+
+<h3 id="pattern-matching">Pattern Matching</h3>
+
+<p>The technique of using pattern matching to
+to implement logic in your code is a very standard technique in functional programming. In some sense it is a very natural way to have different code to handle different <em>patterns</em>.
+There are quite a few different things that you can use as patterns:</p>
+
+<ul>
+  <li>Values</li>
+  <li>Types</li>
+  <li>Guards/Expression</li>
+  <li>special patterns related to data structures (like [],(x::xs) for lists)</li>
+</ul>
+
+<p>Right now let us use pattern matching on values.</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">List</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="c1">--pattern matching and Recursion</span>
+<span class="n">facP</span> <span class="o">:</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">facP</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="kr">case</span> <span class="n">n</span> <span class="kr">of</span>
+    <span class="mi">0</span> <span class="o">-&gt;</span> <span class="mi">0</span>
+    <span class="mi">1</span> <span class="o">-&gt;</span> <span class="mi">1</span>
+    <span class="kr">_</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">*</span> <span class="n">facP</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="n">flow</span> <span class="n">down</span> <span class="p">[</span>
+    <span class="n">print</span> <span class="s">"factorial(5) using recursion is : "</span> <span class="p">(</span><span class="n">facP</span> <span class="mi">5</span><span class="p">)]</span>
+
+<span class="c1">--a helper function to make display easier</span>
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">))</span></code></pre></figure>
+
+<p>As you can see from the code above there are three patterns that are tested against the current value of <code class="highlighter-rouge">n</code> either <code class="highlighter-rouge">n</code> is 0, 1 or <em>any other value</em>.</p>
+
+<h3 id="pattern-matching-on-lists">Pattern Matching on Lists</h3>
+
+<p>Combining recursion with pattern matching on lists gives us the technique to write many interesting functions. Here we have shown three functions (<code class="highlighter-rouge">length</code>, <code class="highlighter-rouge">reverse</code>, <code class="highlighter-rouge">head</code>) for you to review.</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">List</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="n">length</span> <span class="o">:</span> <span class="kt">List</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">number</span>
+<span class="n">length</span> <span class="n">xs</span> <span class="o">=</span> <span class="kr">case</span> <span class="n">xs</span> <span class="kr">of</span>    
+    <span class="kt">[]</span>    <span class="o">-&gt;</span> <span class="mi">0</span>
+    <span class="n">x</span><span class="o">::</span><span class="n">xs</span> <span class="o">-&gt;</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">length</span> <span class="n">xs</span>
+
+<span class="n">reverse</span> <span class="o">:</span> <span class="kt">List</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">List</span> <span class="n">a</span>
+<span class="n">reverse</span> <span class="n">xs</span> <span class="o">=</span> <span class="kr">case</span> <span class="n">xs</span> <span class="kr">of</span>
+  <span class="kt">[]</span> <span class="o">-&gt;</span> <span class="kt">[]</span>
+  <span class="n">x</span><span class="o">::</span><span class="n">xs</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">reverse</span> <span class="n">xs</span><span class="p">)</span><span class="o">++</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+
+<span class="n">head</span> <span class="o">:</span> <span class="kt">List</span> <span class="n">number</span> <span class="o">-&gt;</span> <span class="n">number</span>
+<span class="n">head</span> <span class="n">xs</span> <span class="o">=</span> <span class="kr">case</span> <span class="n">xs</span> <span class="kr">of</span>
+  <span class="kt">[]</span> <span class="o">-&gt;</span> <span class="mi">0</span>
+  <span class="n">x</span><span class="o">::</span><span class="n">xs</span> <span class="o">-&gt;</span> <span class="n">x</span>
+
+<span class="n">main</span> <span class="o">=</span>
+  <span class="n">flow</span> <span class="n">down</span> <span class="p">[</span><span class="n">print</span> <span class="s">"The length the list [2..10] is : "</span> <span class="p">(</span><span class="n">length</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="mi">10</span><span class="p">])</span>
+  <span class="p">,</span><span class="n">print</span> <span class="s">"The reversed elements of the list [2..5] is : "</span> <span class="p">(</span><span class="n">reverse</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="mi">5</span><span class="p">])</span>
+  <span class="p">,</span><span class="n">print</span> <span class="s">"The head element of the list [2..5] is : "</span> <span class="p">(</span><span class="n">head</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="mi">5</span><span class="p">])</span>
+  <span class="p">,</span><span class="n">print</span> <span class="s">"The first 2 elements of the list [1..5] is : "</span> <span class="p">(</span><span class="n">take</span> <span class="mi">2</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="mi">5</span><span class="p">])</span>
+  <span class="p">]</span>
+
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">))</span></code></pre></figure>
+
+<h3 id="exercises-2">Exercises</h3>
+
+<ol>
+  <li>Implement the function <code class="highlighter-rouge">take n ys</code> that returns the first $n$ elements of the list of $ys$.</li>
+</ol>
+
+<p>In case you want to just look at the solution here it is.</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="n">take</span><span class="o">:</span><span class="n">number</span> <span class="o">-&gt;</span> <span class="kt">List</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">List</span> <span class="n">a</span>
+<span class="n">take</span> <span class="n">m</span> <span class="n">ys</span> <span class="o">=</span>
+  <span class="kr">case</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">ys</span><span class="p">)</span> <span class="kr">of</span>
+   <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="kr">_</span><span class="p">)</span> <span class="o">-&gt;</span>  <span class="kt">[]</span>
+   <span class="p">(</span><span class="kr">_</span><span class="p">,</span> <span class="kt">[]</span><span class="p">)</span><span class="o">-&gt;</span>  <span class="kt">[]</span>
+   <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">x</span><span class="o">::</span><span class="n">xs</span><span class="p">)</span> <span class="o">-&gt;</span>  <span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">++</span> <span class="n">take</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">xs</span></code></pre></figure>
+
+<h3 id="higher-order-functions---maps-filters-and-folds">Higher Order Functions - Maps, Filters and Folds</h3>
+
+<p>Higher order functions is a fancy term for functions that take other functions as parameter. Having said that there is an interesting way to look at this as a paradigm shift in the way we think about functions. The normal way we use functions is to say to the function here is some <strong>data</strong> (parameters) can you please run yourself on my data. On the other hand with higher order functions you are saying here is some <strong>code</strong> can you please run this <strong>code</strong> for me in <strong>your context</strong>.</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">List</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="n">firstTenPowersOfTwo</span> <span class="o">=</span> <span class="n">map</span> <span class="p">((</span><span class="o">^</span><span class="p">)</span><span class="mi">2</span><span class="p">)</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="mi">10</span><span class="p">]</span>
+
+<span class="n">sumList</span> <span class="o">:</span> <span class="n">number</span> <span class="o">-&gt;</span> <span class="kt">List</span> <span class="n">number</span> <span class="o">-&gt;</span> <span class="n">number</span>
+<span class="n">sumList</span> <span class="n">initialValue</span> <span class="o">=</span>
+  <span class="kt">List</span><span class="o">.</span><span class="n">foldr</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="n">initialValue</span>
+
+<span class="n">main</span> <span class="o">=</span>
+  <span class="n">flow</span> <span class="n">down</span> <span class="p">[</span><span class="n">print</span> <span class="s">"The first ten powers of 2 are : "</span>    <span class="n">firstTenPowersOfTwo</span>
+   <span class="p">,</span><span class="n">print</span> <span class="s">"The sum of the elements of the list [1..10] : "</span> <span class="p">(</span><span class="n">sumList</span> <span class="mi">0</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="mi">10</span><span class="p">])</span>
+  <span class="p">]</span>
+
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">))</span></code></pre></figure>
+
+<h3 id="exercises-3">Exercises</h3>
+
+<ul>
+  <li>Implement the cartesian product of two lists. Given two lists
+<code class="highlighter-rouge">l1= [1,2,3] l2=[1,2,3,4]</code> output the list <code class="highlighter-rouge">l3= [(1,1),(1,2),(1,3),(1,4),(2,1),(2,2),(2,3),(2,4),(3,1),(3,2),(3,3),(3,4)]</code>
+(This exercise was suggested to me by <a href="https://twitter.com/ainvvy">my friend</a>, and it really illustrates how difficult it is to code until you have mastered the functional programming idioms.)</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">List</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="n">show</span> <span class="n">l3</span>
+
+<span class="n">l1</span> <span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">l2</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="mi">4</span><span class="p">]</span>
+
+<span class="n">cartesianProduct</span> <span class="n">listOfFuncs</span> <span class="n">alist</span> <span class="o">=</span> <span class="n">concatMap</span> <span class="p">(</span><span class="nf">\</span><span class="n">f</span> <span class="o">-&gt;</span> <span class="n">map</span> <span class="n">f</span> <span class="n">alist</span><span class="p">)</span> <span class="n">listOfFuncs</span>
+
+<span class="n">l3</span> <span class="o">=</span> <span class="n">cartesianProduct</span> <span class="p">(</span><span class="n">map</span> <span class="p">(,)</span> <span class="n">l1</span><span class="p">)</span> <span class="n">l2</span></code></pre></figure>
+
+<p>You should look up the definition of concatMap and other functions defined in the <a href="http://package.elm-lang.org/packages/elm-lang/core/3.0.0/List">List module</a>.</p>
+
+<h3 id="anonymous-functions">Anonymous Functions</h3>
+
+<p>The term Lambda function or Lambda expression comes from <a href="[https://en.wikipedia.org/wiki/Lambda_calculus]">Lambda Calculus</a>. Introduced by <a href="https://en.wikipedia.org/wiki/Alonzo_Church">Alonzo Church</a> in the 1930’s as a part of a study of the foundations of mathematics. Just like the [<a href="https://en.wikipedia.org/wiki/Turing_machine">Turing machine</a> is a fundamental model for computation, Lambda Calculus provides a equivalent model for computation. This little comment is a glimpse into a very interesting world of formal analysis of mathematics and computation that I encourage you to follow in your leisure.</p>
+
+<p>Most of the functions that we have encountered so far have names. But are the names really important? Actually, names are important only if we want to reuse the functions in many places. Then, referring to them by their name is quite handy.</p>
+
+<p>We use Lambda functions most often when:
+* We would like to just create a function “right where we need it”
+* We only plan to use the function once.
+* The function is fairly simple
+* We want to return a function from a function.</p>
+
+<p>Usually we do this to pass/receive these functions to other functions that need them.</p>
+
+<p>Here are a couple of examples of Lambda Functions:</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">List</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="c1">--binnding an anonymous function to a variable</span>
+<span class="n">addExclaim</span> <span class="o">=</span> <span class="nf">\</span><span class="n">s</span> <span class="o">-&gt;</span> <span class="n">s</span> <span class="o">++</span> <span class="s">"!"</span>
+
+<span class="n">main</span> <span class="o">=</span>
+  <span class="n">flow</span> <span class="n">down</span> <span class="p">[</span><span class="n">print</span> <span class="s">" add an ! to Hello : "</span>  <span class="p">(</span><span class="n">addExclaim</span> <span class="s">"hello"</span><span class="p">)</span>
+   <span class="p">,</span><span class="n">print</span> <span class="s">"the square of the first 10 numbers : "</span> <span class="p">(</span><span class="n">map</span> <span class="p">(</span><span class="nf">\</span><span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="p">)</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="mi">10</span><span class="p">])</span>
+  <span class="p">]</span>
+
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">))</span></code></pre></figure>
+
+<h3 id="exercises-4">Exercises</h3>
+
+<ul>
+  <li>
+    <p>Define an anonymous function and use it to double all the elements of a list.</p>
+  </li>
+  <li>
+    <p>By combining some of the techniques described about implement the quicksort algorithm to sort a list.</p>
+  </li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="n">show</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">List</span> <span class="n">exposing</span> <span class="p">(</span><span class="n">filter</span><span class="p">)</span>
+
+<span class="n">main</span> <span class="o">=</span>
+  <span class="n">show</span> <span class="p">(</span><span class="n">qsort</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span>
+
+<span class="n">qsort</span> <span class="o">:</span> <span class="kt">List</span> <span class="n">comparable</span> <span class="o">-&gt;</span> <span class="kt">List</span> <span class="n">comparable</span>
+<span class="n">qsort</span> <span class="n">list</span> <span class="o">=</span>
+  <span class="kr">case</span> <span class="n">list</span> <span class="kr">of</span>
+    <span class="kt">[]</span> <span class="o">-&gt;</span>
+        <span class="kt">[]</span>
+    <span class="n">x</span> <span class="o">::</span> <span class="n">xs</span> <span class="o">-&gt;</span>
+        <span class="kr">let</span>
+          <span class="n">greater</span>  <span class="o">=</span> <span class="n">filter</span> <span class="p">((</span><span class="o">&lt;=</span><span class="p">)</span> <span class="n">x</span><span class="p">)</span> <span class="n">xs</span>
+          <span class="n">lesser</span> <span class="o">=</span> <span class="n">filter</span> <span class="p">((</span><span class="o">&gt;</span><span class="p">)</span>  <span class="n">x</span><span class="p">)</span> <span class="n">xs</span>
+        <span class="kr">in</span>
+          <span class="n">qsort</span> <span class="n">lesser</span> <span class="o">++</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">++</span> <span class="n">qsort</span> <span class="n">greater</span></code></pre></figure>
+
+<h3 id="function-composition-and-pipes">Function Composition and Pipes</h3>
+
+<p>In Elm the operator for function composition is <code class="highlighter-rouge">&gt;&gt;</code> and <code class="highlighter-rouge">&lt;&lt;</code> :</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="n">f</span> <span class="o">&gt;&gt;</span> <span class="n">g</span> <span class="o">=</span> <span class="n">f</span> <span class="p">(</span><span class="n">g</span> <span class="p">)</span> <span class="o">=</span> <span class="n">g</span> <span class="o">&lt;&lt;</span> <span class="n">f</span></code></pre></figure>
+
+<p>In addition there is also the <code class="highlighter-rouge">|&gt;</code> operator that allows us to pass the output of one expression as the last argument of the next function. (Exercise: check this.)</p>
+
+<figure class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="kr">import</span> <span class="nn">Graphics.Element</span> <span class="n">exposing</span> <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+
+<span class="n">isEven</span> <span class="o">:</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+<span class="n">isEven</span> <span class="n">n</span> <span class="o">=</span>
+   <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+
+<span class="n">isOdd</span> <span class="o">:</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+<span class="n">isOdd</span> <span class="n">x</span> <span class="o">=</span> <span class="n">not</span><span class="p">(</span><span class="n">isEven</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="n">isOdd1</span> <span class="o">:</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+<span class="n">isOdd1</span> <span class="o">=</span> <span class="n">not</span> <span class="o">&lt;&lt;</span> <span class="n">isEven</span>
+
+<span class="n">isOdd2</span> <span class="o">:</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+<span class="n">isOdd2</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">|&gt;</span> <span class="n">isEven</span> <span class="o">|&gt;</span><span class="n">not</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="n">flow</span> <span class="n">down</span> <span class="p">[</span>
+              <span class="n">print</span> <span class="s">"IsEven (3) : "</span> <span class="p">(</span><span class="n">isEven</span> <span class="mi">3</span><span class="p">)</span>
+             <span class="p">,</span><span class="n">print</span> <span class="s">"IsOdd (3) : "</span> <span class="p">(</span><span class="n">isOdd</span> <span class="mi">3</span><span class="p">)</span>
+             <span class="p">,</span><span class="n">print</span> <span class="s">"IsOdd1 (3) : "</span> <span class="p">(</span><span class="n">isOdd1</span> <span class="mi">3</span><span class="p">)</span>
+             <span class="p">,</span><span class="n">print</span> <span class="s">"IsOdd2 (3) : "</span> <span class="p">(</span><span class="n">isOdd2</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="p">]</span>
+
+<span class="c1">--a helper function to make display easier</span>
+<span class="n">print</span> <span class="n">message</span> <span class="n">value</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">message</span> <span class="o">++</span> <span class="p">(</span><span class="n">toString</span> <span class="n">value</span><span class="p">))</span></code></pre></figure>
+
+<h2 id="closures">Closures</h2>
+
+<p>The main idea behind currying is that functions that have <code class="highlighter-rouge">n</code> parameters can be reduced to a functions that have a single parameter.</p>
+
+<p>In other words we are saying that
+<code class="highlighter-rouge">f : a -&gt; b -&gt; c</code> is the curried form of <code class="highlighter-rouge">g : (a,b) -&gt; c</code>.</p>
+
+<p>Of course this means that we are saying that the two function f and g are the same or ` f x y = g (x,y)`.</p>
+
+<p>Let us see what happens when we  perform <strong>partial application</strong> of functions. In other words if a function expects 2 arguments (for example) then we can create a new function with 1 argument by partial application.</p>
+
+<p>```haskell
+import Graphics.Element exposing (..)</p>
+
+<p>add : Int -&gt; Int -&gt; Int
+add x y  =
+   x + y</p>
+
+<p>– create increment by partiial application (add 1)
+increment : Int -&gt; Int
+increment = add 1</p>
+
+<p>main = flow down [
+              print “add 2 3 : “ (add 2 3)
+             ,print “increment 3 gives : “ (increment 3)
+            ]</p>
+
+<p>–a helper function to make display easier
+print message value = show (message ++ (toString value))
+```
+In the example above we were able to create the function
+<code class="highlighter-rouge">increment : Int -&gt; Int</code> by partial application from the function
+<code class="highlighter-rouge">add : Int -&gt; Int -&gt; Int</code>. As you can see the number of parameters in the function increment is less than that of the function add. <strong>note:</strong> Elm does not give us an error saying that it expected two parameters, it returns a new function with one less argument. This behavior needs getting used to as sometimes you will find that in your code if you miss a paramter the error message will be about problems caused by this new function that you have unintentionally created.</p>
+
+<p>This example give us the heuristics for currying. We can read the signature <code class="highlighter-rouge">add : Int -&gt; Int -&gt; Int</code> either as saying that add is a function that takes two Integers and returns an Integer or add is a function that given an Int it returns a function  from (Int -&gt; Int). And these two representations are equivalent. We just used partial application to see what this looks like.</p>
+
+<p>For the most part Currying is formal and does not impact the new developer. I would say understanding partial application is quite useful in many situations.</p>
+
+<h2 id="sections">Sections</h2>
+
+<p>Another related idea is that we can also use partial applications on infix operators.
+Here are some examples of sections:</p>
+
+<p>```haskell
+import Graphics.Element exposing (..)</p>
+
+<p>increment : Int -&gt; Int
+increment = ((+) 1)</p>
+
+<p>twoToPower : Int -&gt; Int
+twoToPower = ((^)2)</p>
+
+<p>square : Int -&gt; Int
+square = (flip (^)2)</p>
+
+<p>main = flow down [
+              print “2 to the power 3 : “ (twoToPower 3)
+             ,print “increment 3 gives : “ (increment 3)
+             ,print “square of 3 is : “ (square 3)
+            ]</p>
+
+<p>–a helper function to make display easier
+print message value = show (message ++ (toString value))
+```</p>
+
+<h2 id="closures-1">Closures</h2>
+
+<p>Now we come to a very interesting concept that we must understand if we are going to pass functions to other functions.</p>
+
+<p>Consider this example:</p>
+
+<p>```haskell
+import Graphics.Element exposing (..)</p>
+
+<p>createIncrementer : Int -&gt; Int -&gt; Int
+createIncrementer n =
+ let incrementValue = n
+ in ((+) incrementValue)</p>
+
+<p>incrementByOne : Int -&gt; Int
+incrementByOne = createIncrementer 1</p>
+
+<p>incrementByTwo : Int -&gt; Int
+incrementByTwo = createIncrementer 2</p>
+
+<p>main = flow down [
+              print “incrementByOne 3 : “ (incrementByOne 3)
+             ,print “incrementByTwo gives : “ (incrementByTwo 3)
+            ]</p>
+
+<p>–a helper function to make display easier
+print message value = show (message ++ (toString value))
+```</p>
+
+<p>In this example the function <code class="highlighter-rouge">createIncrementer</code> returns a function. But that function depends on the local variable <code class="highlighter-rouge">incrementValue</code> that is defined within <code class="highlighter-rouge">createIncrementer</code>.
+What is intesting is that the returned functions, <code class="highlighter-rouge">incrementByOne</code> and <code class="highlighter-rouge">incrementByTwo</code> remember/capture the <strong>value of this local variable at the time they were created</strong>. So they have captured some of the state of the function that they were created in. This is called “closing over the local variable” and more generally this behavior is called a closure.</p>
+
