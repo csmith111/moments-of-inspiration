@@ -15,7 +15,7 @@ education and entertaintment on my blog. </p>
   {% if post.type == 'link' %}
     <div class="post other link">
       <a class="icon" href="{{ post.url }}" title="This is a link elsewhere">★</a>
-      <h2><a href="{{ page.url | prepend: site.github.url }}">{{ post.title }}</a></h2>
+      <h2><a href="{{ page.url | prepend: site.github.url ++ "/moments-of-insight/" }}">{{ post.title }}</a></h2>
       <p>{{ post.content }}</p>
     </div>
   {% else %}
