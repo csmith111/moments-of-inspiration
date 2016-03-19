@@ -21,7 +21,7 @@ on my blog. </p>
   {% else %}
     <div class="post">
       <p class="date">{{ post.date | date: "%B %e, %Y" }}</p>
-      <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+      <h2><a href="{{ post.url | prepend: site.baseurl}}">{{ post.title }}</a></h2>
       <p class="post-summary">{{ post.summary }}</p>
     </div>
   {% endif %}
