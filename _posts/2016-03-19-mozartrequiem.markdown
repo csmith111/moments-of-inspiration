@@ -28,13 +28,9 @@ For groups of notes we can also define:
 * Meter
 
 ## The Tone
-We have all heard it and said "music is made up of notes"
+We have all heard it and said "music is made up of notes". Later we will get more abstract and talk about music being about "music is about the spaces between the notes". But first let us understand the notes.
 
-In these articles we will make a distinction between __notes__ and __tones__.  
-
-__Note__ a single unit of sound in written music.
-
-__Tone__ a single unit of sound  in the music we hear.
+In these articles we will make a distinction between __notes__ and __tones__. __Note__ a single unit of sound in written music. __Tone__ a single unit of sound  in the music we hear.
 
 We introduce notes when we encounter written music; until then we will only refer to tones.
 
