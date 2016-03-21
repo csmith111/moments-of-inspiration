@@ -14,4 +14,4 @@ __WHEN__ I weather the storms of grief, I discover an oasis of tranquility \\
 __WHEN__ I experience the burning ache of sorrow, I have known the bliss of love \\
 __WHEN__ I am shrouded by silence, I hear the music I could never hear before \\
 __WHEN__ I am most wretched, I am touched by grace \\
-__WHEN__ I have finished my struggles, I will know peace \
+__WHEN__ I have finished my struggles, I will know peace \\
