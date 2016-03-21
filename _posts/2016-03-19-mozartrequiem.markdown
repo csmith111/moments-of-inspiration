@@ -49,5 +49,6 @@ __Frequency__ The number of vibrations/second that a string makes is called its
 frequency. The unit that we use is call the Hertz (Hz) defined after Heinrich
 Hertz who among other things made the first radio transmitter.
 So where can we see the use of this definition in music? Every tone has a
-frequency. So when we pluck the string of a tuned guitar the first string (E)
-vibrates at a frequency of 329.63 Hz.
+frequency. So when we pluck the string of a tuned guitar the first string (E) vibrates at a frequency of 329.63 Hz. And when we strike a piano the middle A vibrates at a frequency of 440 Hz.
+
+We cannot hear all the sounds that can be produced, the ear is able to hear sounds that have frequencies in the range 20Hz - 20,000 Hz.
