@@ -2,7 +2,7 @@
 layout: post
 title: "Choices"
 date: "2016-03-19 17:19:03 -0400"
-summary: Our life
+summary: Our life is an outcome of the choices we make. Why can we just make good choices and live a fulfilled and happy life? 
 categories:  update
 ---
 
