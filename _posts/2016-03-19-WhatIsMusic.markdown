@@ -2,7 +2,7 @@
 layout: post
 title: "What is Music"
 date: "2016-03-19 17:19:03 -0400"
-summary:  Music is a universal art for. Where there are humans we find music. In this series of blog posts we will look at music closely. Try to understand its structure and how what we easily perceive as music has significant underlying structure.   
+summary:  Music is a universal art form. Where there are humans we find music. In this series of blog posts we will look at music closely. Try to understand its structure and how what we easily perceive as music has significant underlying structure.   
 categories:  update music
 ---
 
