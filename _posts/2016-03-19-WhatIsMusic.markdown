@@ -37,14 +37,16 @@ We introduce notes when we encounter written music; until then we will only refe
 ## Pitch
 Everything that we recognize as sound is made up of vibrations. If we pluck a
 string on an acoustic instrument the air around it is compressed and decompressed.
-These changes in pressure of the air travels through the air and reaches our ear and causes the ear drum to vibrate. This vibration is then converted into electrical signals that are carried to the brain which then interprets the signal as a sound! The brain then recognizes that the tone has a particular pitch and for the trained musician you can even recognize the actual frequency of the tone! Isn't it amazing to think that all this (and more) happens when I pluck a string and you hear the tone!
+These changes in pressure of the air travel through the air to reach our ear and cause the ear drum to vibrate. This vibration is then converted into electrical signals that are carried to the brain which then interprets the signal as a sound!
+
+The brain then recognizes that the tone has a particular pitch and for the trained musician you can even recognize the actual frequency of the tone! Isn't it amazing to think that all this (and more) happens when I pluck a string and you hear the tone!
 
 Before we proceed a definition.
 
-__Frequency__ The number of vibrations/second that a string makes is called its
-frequency. The unit that we use is call the Hertz (Hz) defined after Heinrich
+__Frequency__ The number of vibrations per second that a string makes is called its
+frequency. The unit that we use to measure the frequency is called the Hertz (Hz) defined after Heinrich
 Hertz who among other things made the first radio transmitter.
 So where can we see the use of this definition in music? Every tone has a
-frequency. So when we pluck the string of a tuned guitar the first string (E) vibrates at a frequency of 329.63 Hz. And when we strike a piano the middle A vibrates at a frequency of 440 Hz.
+frequency. So when we pluck the string of a tuned guitar, the first string (E) vibrates at a frequency of 329.63 Hz. And when we strike a piano, the middle A vibrates at a frequency of 440 Hz.
 
-We cannot hear all the sounds that can be produced, the ear is able to hear sounds that have frequencies in the range 20Hz - 20,000 Hz.
+We cannot hear all the sounds that can be produced.  The human ear is only able to hear sounds that have frequencies in the range 20Hz - 20,000 Hz.

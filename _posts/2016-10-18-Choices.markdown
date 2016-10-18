@@ -1,0 +1,61 @@
+---
+layout: post
+title: "Choices"
+date: "2016-03-19 17:19:03 -0400"
+summary: Our life
+categories:  update
+---
+
+Between the stimulus and the response there is a moment, between action and reaction there is a moment, it is in this moment that our entire life is played out. The choices that we make for our responses in those moments define our lives.
+
+Given that this moment is all important, why can’t we just make good choices and be in control of our responses? 
+There are many answers to this question. Let us focus on one aspect of this of the answer to this question, the deep biological reasons for our responses. The immediate response that we have especially in stressful/unusual/unplanned situations is governed by the amygdala. This is a primitive part of our human brain that governs our instinctive responses. This part of  the brain was built to react to danger and responds with a “flight or fight” response, which is not optimal. The frontal cortex which is the thinking part of our brain only gets to react a fraction of a second later. We would respond better to situations if we could leverage the frontal cortex of our brain. But we fail to do so because of our biology. So if we want to conquer our responses what can we do, are we helpless? 
+
+Before we start, let us begin by realizing that controlling our responses is the single most important art that we can try to master. Think of a few things that you could achieve once you have mastery over your self and your responses.
+
+Here are three practical things we can do to improve the way we respond to situations:
+
+
+  1. Meditation       
+  2. Anticipation      
+  3. Training      
+
+
+### Meditation
+I will write more about meditation in another note. It is becoming clear to us that meditation, the art of mindfulness  is an important aspect of our lives and a skill that we must cultivate. As you have experienced there is an “observer” in our minds that seems to watch our actions and thoughts. This is the deeper inner self, that gives each one of us the sense of “I am”. The meditation that I am taking about is taking 5 minutes a day and becoming aware of becoming aware of your self. Observing your thoughts as they arise, and centering your mind back on being aware of yourself.
+ 
+Please try this:
+Here is a guided meditation that you can try:[this guided meditation][guided-meditation]
+
+You can look at articles and talks by Kabat Zinn like this [talk at Google: Mindfullness with Jon Kabat-Zinn][JKZ-1].
+
+Or this one [Mindfullness - An Introduction][JKZ-2]
+After trying this daily for a couple of weeks, I would love to hear your experience.
+
+### Anticipation
+We need to be able to anticipate the situations that we will be put into and think about how we are going to respond. Later we need to reflect on what happened and see how effective our anticipation was.
+
+
+  * Did the situation arise as we had anticipated?
+  * Did we respond as we planned? If yes, then you need to be very proud of yourself. Otherwise, you need to think about why you responded the way you did.
+  * Did something happen that you did not anticipate?
+
+
+### Training
+Coupled with anticipation, is the notion of training. We need to practice situations that we can face and practice our responses. The simplest optimal response to a stressful/unplanned situation is to say “Let me think about that and get back to you”. This will break the normal sequence and give you time to choose your response. Make the time to think about the situation and choose your response. Be positive, cooperative and constructive in your response.
+Once we have chosen this path of action include a reflection on a daily basis to see if your training has resulted the changes in behavior that you need. 
+
+  * Was I in situation that I had been training for?   
+  * Did I respond the way I trained?     
+  * If not why not?    
+  * Do I need to add something to my training?
+
+On the subject of training, there is a lot more training that we can do, to make sure that when we respond we are responding optimally. We will explore this more in the coming notes.
+ 
+Just by reading this you have started your journey on a path to fulfilling your potential and being a happier person and achieving your goals.  
+“A journey of a thousand miles starts with one step…” I hope that you will take these first steps.. I look forward to being part of your journey.
+
+[Jekyll]:http://jekyllrb.com/
+[guided-meditation]:https://www.youtube.com/watch?v=422n7tzAxEI
+[JKZ-1]:https://www.youtube.com/watch?v=3nwwKbM_vJc
+[JKZ-2]:https://www.youtube.com/watch?v=xeCXhXDkzpw
