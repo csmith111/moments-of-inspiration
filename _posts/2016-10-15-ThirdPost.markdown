@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Why aren't things the way they should be?"
-date: "2016-10-19 17:19:03 -0400"
+date: "2016-10-15"
 summary: This a question that we ask, often. Reconciling the difference between the way things are and the way things should be is one of the big challenges we face as individuals and as a society.
 categories:  update
 ---
