@@ -12,8 +12,7 @@ description: > # this means to ignore newlines until "baseurl:"
 
   We have all experienced moments in our life when we feel inspired.
   These are moments when we feel that life is worth living and
-  we have found another reason for that makes it all worthwhile. 
-  In this blog I will capture some of my moments of inspiration.
+  we have found another reason for that makes it all worthwhile.
   In this blog you will find some of my moments of insight;
   I would love to discover yours.
 baseurl: /moments-of-inspiration # the subpath of your site, e.g. /blog
