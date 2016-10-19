@@ -22,7 +22,8 @@ Here are some concrete steps that you can take to lead a more fulfilling life.
 
 
 
-This post is based on the book by Bronnie Ware, The Top Five Regrets of the dying.
+This post is based on ideas in the book by Bronnie Ware, The Top Five Regrets of the dying. Bronnie was nurse who worked in palliative care and she recorded this list based on her experiences.
+ 
 Here is the list:
 
 1. I wish I’d had the courage to live a life true to myself, not the life others expected of me.
