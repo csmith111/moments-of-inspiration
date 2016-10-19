@@ -9,7 +9,7 @@ categories:  update
 __Don't work too hard, express your feelings, keep in touch with your friends, let yourself be happier and live the life that is true to yourself.__
 
 If you can do this you will eliminate the top 5 regrets that people have at the end of their lives and you would have crossed another key milestone in the "pursuit of happiness".
-What amazed me was this seemed something so natural that I imagined we would all be living this way. But a moments reflection was enough for me to discover that like many things in life, sometimes the most simple and obvious things elude us. I realized that like all things that are worth doing this also needs effort - constant, diligent effort.
+What amazed me was that this sounds so natural and obvious that I imagined we would all be living this way. But a moments reflection was enough for me to discover that like many things in life, sometimes the most simple and obvious things elude us. Like all things that are worth doing this too needs effort - constant, diligent effort.
 
 Here are some concrete steps that you can take to lead a more fulfilling life.
 
