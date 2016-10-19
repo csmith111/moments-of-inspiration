@@ -18,6 +18,7 @@ Here are some concrete steps that you can take to lead a more fulfilling life.
 * Create a plan that actively incorporates these elements into your daily life.
 * What concrete metrics can you use to measure your progress?
 * Periodically review how you are doing by evaluating your metrics.
+* Share your thoughts and experiences with your friends and see if you can help them on their journeys or just be a witness to the progress that they are making.
 
 
 
