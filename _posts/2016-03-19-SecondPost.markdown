@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "WHEN"
-date:   2016-02-06 13:00:28 -0500
-summary:  A poem that I wrote recently after a long time of letting the silence drown our any poetry that I could write.  
+date:   2016-03-19 13:00:28 -0500
+summary:  A poem that I wrote recently after a long time of letting the silence drown out any poetry that I could write.  
 categories: jekyll update
 ---
 __WHEN__ I have emptied my soul, I am full of life \\
