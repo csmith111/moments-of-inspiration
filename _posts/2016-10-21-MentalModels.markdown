@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Mental Models and Reality"
-date: 2016-10-19
+date: 2016-10-21
 summary: We do not interact with the world directly; instead we interact with reality as reflected by our mental model of the world.
 categories:  update
 ---
