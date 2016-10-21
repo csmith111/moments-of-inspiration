@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title: "Mental Models and Reality"
@@ -20,7 +19,7 @@ Now, what if I told you that she had a received an urgent call from the hospital
 
 __Would you be annoyed now?__
 
-What changed in the world outside that caused you to have a different response? 
+What changed in the world outside that caused you to have a different response?
 
 The situation was a the same, someone was interrupting your meeting. But your mental model was different. Your mental picture of the person who was interrupting the meeting was different.
 
