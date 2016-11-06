@@ -40,4 +40,4 @@ If you need we can spend some time reviewing an  area that is of interest to you
 
 Have you made a list of skill/activities that you can be more efficient in? Remember why you are doing this. Do not lose touch with the WHYs? Make a plan and get started on your journey to a 10x better version of your self.
 
-In the next post we will look at Effectiveness. We will also review planning and execution in future posts. 
+In the next post we will look at __Effectiveness__. We will also review planning and execution in future posts. 
